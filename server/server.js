@@ -25,6 +25,11 @@ app.use(cookieParser());
 
 app.use('/', require('./routes/root'));
 
+app.use('/users', require('./routes/userRoutes'));
+
+//Testing  route
+app.use('/walets', require('./routes/walletRoutes'));
+
 app.use(errorHandler);
 
 mongoose.connection.once('open', () => {

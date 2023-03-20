@@ -23,11 +23,9 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.use('/', require('./routes/root'));
-
 app.use('/users', require('./routes/userRoutes'));
 
-//Testing  route
+// Testing route
 app.use('/walets', require('./routes/walletRoutes'));
 
 app.use(errorHandler);

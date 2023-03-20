@@ -21,6 +21,7 @@
       }
     ],
     "import/no-extraneous-dependencies": ["off"],
+    "no-underscore-dangle": "off",
     "no-unused-vars": "warn",
     "no-use-before-define": ["error", { "functions": false, "classes": false }]
   }

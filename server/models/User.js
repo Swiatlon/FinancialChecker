@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   },
   wallet: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    required: false,
     ref: 'Wallet',
   },
 });

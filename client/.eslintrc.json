@@ -14,7 +14,7 @@
   "rules": {
     "quotes": ["warn", "single"],
     "prettier/prettier": [
-      "error",
+      "warn",
       {
         "singleQuote": true,
         "endOfLine": "auto",
@@ -24,10 +24,11 @@
         "printWidth": 120
       }
     ],
+    "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": ["off"],
     "react/jsx-no-target-blank": "off",
     "react/react-in-jsx-scope": ["off"],
     "react/jsx-props-no-spreading": ["warn"],
-    "no-extraneous-dependencies": ["off"],
     "no-shadow": "off"
   }
 }

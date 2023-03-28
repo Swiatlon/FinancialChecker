@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const MainLayoutContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   position: relative;
 `;
 

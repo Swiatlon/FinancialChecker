@@ -2,12 +2,13 @@ import styled from 'styled-components';
 import size from '@/assets/styles/mediaQueries.style';
 
 export const NavBar = styled.nav`
-  height: 100%;
-  width: ${({ navHidden }) => (navHidden ? '65px' : '350px')};
+  height: 100vh;
+  width: ${({ navHidden }) => (navHidden ? '65px' : '330px')};
+  padding-right: 10px;
   transition: 1s all;
   background: #0e0f11;
   font-family: 'Poppins', sans-serif;
-  position: fixed;
+  position: sticky;
   left: 0;
   top: 0;
   border-right: 1px solid rgba(4, 110, 232, 0.6);
@@ -16,13 +17,13 @@ export const NavBar = styled.nav`
     // Animation of hiding
     opacity: ${({ navHidden }) => (navHidden ? '0' : '1')};
     width: ${({ navHidden }) => (navHidden ? '0px' : '280px')};
-    height: ${({ navHidden }) => (navHidden ? '0px' : '100%')};
+    height: ${({ navHidden }) => (navHidden ? '0px' : '100vh')};
   }
   @media (max-width: ${size.tablet}) {
-    width: ${({ navHidden }) => (navHidden ? '60px' : '65%')};
+    width: ${({ navHidden }) => (navHidden ? '60px' : '65vw')};
   }
   @media (max-width: ${size.mobileL}) {
-    width: ${({ navHidden }) => (navHidden ? '60px' : '85%')};
+    width: ${({ navHidden }) => (navHidden ? '60px' : '85vw')};
     padding-right: 10px;
     h3 {
       font-size: 16px;

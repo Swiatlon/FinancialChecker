@@ -10,7 +10,7 @@ import expensesIcon from '@/assets/images/icons/trending-down.svg';
 import logoutIcon from '@/assets/images/icons/log-out.svg';
 
 function Navigation() {
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(true);
   const navigationItems = ['Overview', 'My wallet', 'Add new expenses'];
   const itemsIcons = [homeIcon, cardIcon, expensesIcon];
 

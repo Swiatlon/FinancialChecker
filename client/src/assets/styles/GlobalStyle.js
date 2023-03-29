@@ -12,10 +12,10 @@ const GlobalStyle = createGlobalStyle`
 }
 #root{
     width: 100%;
+   contain: paint;
     min-height: 100vh;
     display: grid;
     background: #171717;
-
 }
 ul{
     list-style-type: none;

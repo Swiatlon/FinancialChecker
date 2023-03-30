@@ -28,7 +28,7 @@
     "import/no-extraneous-dependencies": ["off"],
     "react/jsx-no-target-blank": "off",
     "react/react-in-jsx-scope": ["off"],
-    "react/jsx-props-no-spreading": ["warn"],
+    "react/jsx-props-no-spreading": ["off"],
     "no-shadow": "off"
   }
 }

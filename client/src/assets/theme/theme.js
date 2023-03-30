@@ -1,10 +1,7 @@
 const theme = {
   colors: {
-    white: '#FFFFFF',
-    lightGrey: '#F7F8FA',
-    grey: '#C0C7D6',
-    darkGrey: '#737C8E',
-    black: '#111111',
+    defaultAppColor: '#046ee899',
+    neonColor: 'green',
   },
 
   fontSize: {

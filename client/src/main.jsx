@@ -6,6 +6,9 @@ import ErrorPage from './views/ErrorPage/ErrorPage';
 import App from './App';
 import PostAuthLayout from './layouts/PostAuthLayout/PostAuthLayout';
 import Overview from './views/Overview/Overview';
+import NewExpenses from './views/NewExpenses/NewExpenses';
+
+const user = 'Wiercik';
 
 const router = createBrowserRouter([
   {
@@ -13,7 +16,14 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { path: 'postAuth', element: <PostAuthLayout />, children: [{ path: 'overview', element: <Overview /> }] },
+      {
+        path: 'postAuth',
+        element: <PostAuthLayout user={user} />,
+        children: [
+          { path: 'overview', element: <Overview /> },
+          { path: 'newExpenses', element: <NewExpenses /> },
+        ],
+      },
     ],
   },
 ]);

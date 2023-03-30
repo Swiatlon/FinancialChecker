@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import size from '@/assets/styles/mediaQueries.style';
 
 export const NavBar = styled.nav`
@@ -11,8 +12,8 @@ export const NavBar = styled.nav`
   position: sticky;
   left: 0;
   top: 0;
-  border-right: 1px solid rgba(4, 110, 232, 0.6);
-  box-shadow: 8px 1px 30px -20px rgb(4 110 232 / 50%);
+  border-right: ${({ theme }) => `1px solid  ${theme.colors.neonColor}`};
+  box-shadow: ${({ theme }) => `8px 1px 30px -20px ${theme.colors.neonColor}`};
   .logoContentBox {
     // Animation of hiding
     opacity: ${({ navHidden }) => (navHidden ? '0' : '1')};
@@ -63,7 +64,7 @@ export const LogoContentBox = styled.div`
   gap: 20px;
 `;
 
-export const MenuItem = styled.li`
+export const MenuItem = styled(NavLink)`
   width: min-content;
   cursor: pointer;
   display: flex;
@@ -74,14 +75,19 @@ export const MenuItem = styled.li`
   font-size: 14px;
   white-space: nowrap;
   border: 1px solid transparent;
+  color: white;
   img {
     padding-right: 25px;
+  }
+  &&.active {
+    border-left: ${({ theme }) => `2px solid ${theme.colors.neonColor}`};
   }
   &&:hover {
     transition: 0.5s transform;
     transform: scale(1.06);
-    border-right: 2px solid #024a9f;
-    border-left: 2px solid #024a9f;
+    border-width: 0px 2px;
+    border-style: solid;
+    border-color: ${({ theme }) => theme.colors.neonColor};
   }
 `;
 

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import size from '@/assets/styles/mediaQueries.style';
 
-export const a = styled.div``;
-
 export const OverviewContainer = styled.div`
   width: 90%;
   min-height: 70%;
@@ -43,9 +41,9 @@ export const BoxesContainer = styled.div`
   text-align: center;
   div {
     background: #282525;
-    border-left: 1px solid rgba(4, 110, 232, 0.6);
-    border-right: 1px solid rgba(4, 110, 232, 0.6);
-    /* box-shadow: 8px 1px 30px -30px rgb(4 110 232 / 50%); */
+    border-style: solid;
+    border-color: ${({ theme }) => theme.colors.neonColor};
+    border-width: 0px 2px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import { Chart as ChartJS } from 'chart.js/auto';
+import { useTheme } from 'styled-components';
 import { Line } from 'react-chartjs-2';
 import { OverviewContainer, BoxesContainer, SquareBox, RectangleBox, ChartBox, SideDiv } from './Overview.style';
 
 function Overview() {
+  const theme = useTheme();
+
   const firstChart = {
     labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
     datasets: [
       {
         data: [0, 4000, 200, 1000, 300, 200, 1500, 3000, 20, 10],
-        borderColor: 'rgb(6, 95, 168)',
+        borderColor: theme.colors.neonColor,
         backgroundColor: 'white',
+        pointBackgroundColor: 'white',
+        pointBorderColor: 'black',
       },
     ],
   };
+
   const secondChart = {
     labels: [
       ...Array(31)
@@ -23,11 +29,13 @@ function Overview() {
     datasets: [
       {
         data: [0, 4000, 200, 1000, 300, 200, 1500, 3000, 20, 10],
-        borderColor: 'rgb(6, 95, 168)',
-        backgroundColor: 'white',
+        borderColor: theme.colors.neonColor,
+        pointBackgroundColor: 'white',
+        pointBorderColor: 'black',
       },
     ],
   };
+
   const FirstOptions = {
     responsive: true,
     aspectRadio: 10,
@@ -37,6 +45,7 @@ function Overview() {
       },
     },
   };
+
   const SecondOptions = {
     responsive: true,
     aspectRadio: 10,

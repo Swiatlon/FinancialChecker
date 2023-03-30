@@ -11,8 +11,10 @@ import logoutIcon from '@/assets/images/icons/log-out.svg';
 
 function Navigation() {
   const [isMenuVisible, setIsMenuVisible] = useState(true);
+
   const navigationItems = ['Overview', 'My wallet', 'Add new expenses'];
   const itemsIcons = [homeIcon, cardIcon, expensesIcon];
+  const urls = ['overview', 'wallet', 'newExpenses'];
 
   const handleClick = () => {
     setIsMenuVisible(!isMenuVisible);
@@ -29,7 +31,7 @@ function Navigation() {
           <Hamburger src={HamburgerSrc} alt="menu-logo" onClick={handleClick} />
         </LogoHamburgerContainer>
         {navigationItems.map((item, index) => (
-          <MenuItem key={`${item + index}`} onClick={handleClick}>
+          <MenuItem key={`${item + index}`} to={`postAuth/${urls[index]}`}>
             <img src={itemsIcons[index]} alt="menu-icon" />
             {item}
           </MenuItem>

@@ -9,7 +9,6 @@ import Overview from './views/Overview/Overview';
 import NewExpenses from './views/NewExpenses/NewExpenses';
 
 const user = 'Wiercik';
-
 const router = createBrowserRouter([
   {
     path: '/',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { useTheme } from 'styled-components';
 import { Line } from 'react-chartjs-2';
@@ -36,7 +36,7 @@ function Overview() {
     ],
   };
 
-  const FirstOptions = {
+  const firstOptions = {
     responsive: true,
     aspectRadio: 10,
     plugins: {
@@ -46,7 +46,7 @@ function Overview() {
     },
   };
 
-  const SecondOptions = {
+  const secondOptions = {
     responsive: true,
     aspectRadio: 10,
     plugins: {
@@ -69,7 +69,7 @@ function Overview() {
       <SideDiv>
         <h3>This Week:</h3>
         <ChartBox height="250px">
-          <Line data={firstChart} options={FirstOptions} />
+          <Line data={firstChart} options={firstOptions} />
         </ChartBox>
       </SideDiv>
       <SideDiv>
@@ -86,7 +86,7 @@ function Overview() {
       <SideDiv>
         <h3>This Month:</h3>
         <ChartBox height="250px">
-          <Line data={secondChart} options={SecondOptions} />
+          <Line data={secondChart} options={secondOptions} />
         </ChartBox>
       </SideDiv>
     </OverviewContainer>

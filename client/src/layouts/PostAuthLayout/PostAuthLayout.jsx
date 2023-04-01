@@ -11,6 +11,7 @@ import {
 import AvatarSVG from '@/assets/images/icons/user.svg';
 import ConfigSVG from '@/assets/images/icons/settings.svg';
 import { ThemeUpdateContext } from '@/App';
+import alertForChoosingAppColor from '@/helpers/Alerts/Swal';
 
 function PostAuthLayout() {
   const nickname = 'Wiercik';
@@ -28,7 +29,7 @@ function PostAuthLayout() {
           src={ConfigSVG}
           alt="user avatar"
           onClick={() => {
-            updateAppColor('red');
+            alertForChoosingAppColor(updateAppColor);
           }}
         />
       </TopInformationBox>

@@ -1,6 +1,5 @@
 const theme = {
   colors: {
-    defaultAppColor: '#046ee899',
     neonColor: '#FFB60D',
   },
 

@@ -29,6 +29,13 @@ a{
 .show{
     display: initial;
 }
+
+// Alerts custom styles
+.swal2-popup{
+    color:white;
+    background: #0f1216;
+    transition: 1s all;
+}
 `;
 
 export default GlobalStyle;

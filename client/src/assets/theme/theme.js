@@ -1,6 +1,6 @@
 const theme = {
   colors: {
-    neonColor: '#FFB60D',
+    neonColor: localStorage.designColor ? localStorage.designColor : '#FFB60D',
   },
 
   fontSize: {

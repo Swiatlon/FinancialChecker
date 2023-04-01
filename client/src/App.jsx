@@ -9,8 +9,10 @@ export const ThemeUpdateContext = createContext();
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
-  const setAppDesignColor = (color) => {
-    theme.colors.neonColor = `${color}`;
+
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
+  const setAppDesignColor = (newColor) => {
+    theme.colors.neonColor = newColor;
     navigate(location.pathname); // we refresh route due to change of styles
   };
 

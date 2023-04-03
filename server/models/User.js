@@ -1,19 +1,28 @@
 const mongoose = require('mongoose');
+const transactionSchema = require('./schemas/Transaction');
 
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+    },
+
+    name: {
+      type: String,
+    },
+
+    password: {
+      type: String,
+      required: true,
+    },
+
+    payments: [transactionSchema],
+
+    expenses: [transactionSchema],
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  wallet: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: false,
-    ref: 'Wallet',
-  },
-});
+  // Update with newTransaction ?
+  { timestamps: true },
+);
 
 module.exports = mongoose.model('User', userSchema);

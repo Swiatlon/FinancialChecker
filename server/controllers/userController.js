@@ -56,6 +56,7 @@ const createNewUser = asyncHandler(async (req, res) => {
 // @desc Update a user
 // @route PATCH /users
 // @access PRIVATE
+
 const updateUser = asyncHandler(async (req, res) => {
   const { id, name, password } = req.body;
 
@@ -77,9 +78,12 @@ const updateUser = asyncHandler(async (req, res) => {
   return res.json({ message: 'Updated sucessfull!' });
 });
 
+/*--------------------------------------------------------------*/
+
 // @desc Delete a user
 // @route DELETE /users
 // @access  PRIVATE
+
 const deleteUser = asyncHandler(async (req, res) => {
   const { id } = req.body;
 

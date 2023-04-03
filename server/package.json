@@ -8,8 +8,7 @@
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix",
-    "prepare": "husky install"
+    "lint:fix": "eslint --fix"
   },
   "author": "Swiatlon",
   "license": "MIT",

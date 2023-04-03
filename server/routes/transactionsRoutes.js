@@ -6,6 +6,7 @@ const router = express.Router();
 router
   .route('/transaction')
   .get(transactionController.getAllUserTransactions)
-  .post(transactionController.addNewTransaction);
+  .post(transactionController.addNewTransaction)
+  .delete(transactionController.deleteAllUserTransactions);
 
 module.exports = router;

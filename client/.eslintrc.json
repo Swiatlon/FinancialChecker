@@ -13,6 +13,8 @@
   "plugins": ["react", "prettier"],
   "rules": {
     "quotes": ["warn", "single"],
+    "import/extensions": "warn",
+    "no-unused-vars": "warn",
     "prettier/prettier": [
       "warn",
       {

@@ -14,9 +14,8 @@ function NewExpenses() {
     name: 'Items',
     control,
   });
-  
+
   const addNewItem = () => {
-    console.log(fields);
     append({
       name: '',
       value: '',
@@ -27,21 +26,23 @@ function NewExpenses() {
     remove(index);
   };
 
-    const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    console.log(data);
+  };
 
   return (
     <NewExpensesContainer>
       <ExpensesForm onSubmit={handleSubmit(onSubmit)}>
         <h2>New Expenses</h2>
-        <input {...register('Title', { required: true })} placeholder="Title" />
+        <input {...register('title', { required: true })} placeholder="Title" />
 
         <input
-          {...register('Amount', { required: true, min: 0, valueAsNumber: true })}
+          {...register('amount', { required: true, min: 0, valueAsNumber: true })}
           placeholder="Amount"
           type="number"
         />
 
-        <input {...register('Location', { required: false })} placeholder="Location" />
+        <input {...register('location', { required: false })} placeholder="Location" />
 
         <TwoItemsPerRow>
           <p>Add Item</p>
@@ -69,14 +70,6 @@ function NewExpenses() {
             </ExpensesItem>
           );
         })}
-        {/* <TwoItemsPerRow>
-          <p>Add Item</p>
-          <input value="+" type="button" />
-        </TwoItemsPerRow>
-        <TwoItemsPerRow>
-          <input type="text" placeholder="Item" />
-          <input type="text" placeholder="Value" />
-        </TwoItemsPerRow> */}
         <input type="submit" value="Submit" />
       </ExpensesForm>
     </NewExpensesContainer>

@@ -8,9 +8,12 @@ import App from './App';
 import PostAuthLayout from './layouts/PostAuthLayout/PostAuthLayout';
 import Overview from './views/Overview/Overview';
 import NewExpenses from './views/NewExpenses/NewExpenses';
+import Home from './views/Home/Home';
+import PreAuthLayout from './layouts/PreAuthLayout/PreAuthLayout';
+import Register from './views/Register/Register';
+import Login from './views/Login/Login';
 import store from './app/store';
 
-const user = 'Wiercik';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -18,11 +21,21 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: 'postAuth',
-        element: <PostAuthLayout user={user} />,
+        path: '',
+        element: <PreAuthLayout />,
         children: [
-          { path: 'overview', element: <Overview /> },
-          { path: 'newExpenses', element: <NewExpenses /> },
+          { path: '', element: <Home /> },
+          { path: 'home', element: <Home /> },
+          { path: 'register', element: <Register /> },
+          { path: 'login', element: <Login /> },
+        ],
+      },
+      {
+        path: 'postAuth',
+        element: <PostAuthLayout />,
+        children: [
+          { path: 'home', element: <Overview /> },
+          { path: 'addnewExpenses', element: <NewExpenses /> },
         ],
       },
     ],

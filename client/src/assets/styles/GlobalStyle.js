@@ -16,11 +16,13 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     display: grid;
     background: #171717;
+    color:white;
 }
 ul{
     list-style-type: none;
 }
 a{
+    color:white;
     text-decoration: none;
 }
 .hide{
@@ -28,6 +30,14 @@ a{
 }
 .show{
     display: initial;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+    -webkit-transition-delay: 9999s;
 }
 
 // Alerts custom styles

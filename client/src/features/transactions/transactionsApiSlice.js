@@ -90,3 +90,26 @@ export function getWeeklyExpenses(array) {
 
   return dailyExpenses;
 }
+
+export function getLastSixExpenses(array) {
+  const LastExpenses = Array(6).fill(0);
+  for (let i = 0; i < 6; i += 1) {
+    LastExpenses[i] = array[array.length - 1 - i];
+  }
+
+  return LastExpenses;
+}
+
+export function getMoneyBalance(expenses, payments) {
+  const expensesSum = expenses.reduce((acc, expense) => acc + expense.amount, 0);
+  const paymentsSum = payments.reduce((acc, payment) => acc + payment.amount, 0);
+
+  return paymentsSum - expensesSum;
+}
+
+export function getMonthlyBalance(expenses, payments) {
+  const expensesSum = Object.values(expenses).reduce((a, b) => a + b, 0);
+  const paymentsSum = Object.values(payments).reduce((a, b) => a + b, 0);
+
+  return paymentsSum - expensesSum;
+}

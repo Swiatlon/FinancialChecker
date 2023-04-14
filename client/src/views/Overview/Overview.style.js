@@ -60,6 +60,7 @@ export const SquareBox = styled.div`
   width: 80%;
   height: 140px;
   margin: 20px 0px;
+  color: red;
   @media (max-width: ${size.laptopL}) {
     height: 120px;
   }

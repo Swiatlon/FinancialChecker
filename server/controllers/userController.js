@@ -7,11 +7,13 @@ const User = require('../models/User');
 // @access PRIVATE
 
 const getUser = asyncHandler(async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.query;
+  
+  if (!id) return res.status(400).json({ message: 'Id required!' });
 
   const user = await User.findOne({ _id: id }).select('id email name createdAt updatedAt').lean();
 
-  if (!user) return res.status(400).json({ message: 'User not found' });
+  if (!user) return res.status(400).json({ message: 'User not found!' });
 
   return res.json(user);
 });

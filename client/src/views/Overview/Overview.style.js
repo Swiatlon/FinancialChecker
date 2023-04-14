@@ -83,6 +83,9 @@ export const RectangleBox = styled.div`
   width: 80%;
   height: 100px;
   padding: 10px;
+  span {
+    color: ${({ moneyBalance }) => (moneyBalance < 0 ? 'red' : ' green')};
+  }
   @media (max-width: ${size.laptopL}) {
     width: 140px;
     height: 100px;

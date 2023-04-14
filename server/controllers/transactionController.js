@@ -9,7 +9,7 @@ const Transaction = mongoose.model('TransactionHistory', transactionSchema);
 // @route GET /transaction
 // @access PRIVATE
 const getAllUserTransactions = asyncHandler(async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.query;
 
   if (!id) return res.status(400).json({ message: 'User id is missing to get transactions' });
 
@@ -27,9 +27,10 @@ const getAllUserTransactions = asyncHandler(async (req, res) => {
 // @access PRIVATE
 
 const addNewTransaction = asyncHandler(async (req, res) => {
-  const { id, type, amount } = req.body;
 
-  if (!id || !type || !amount) return res.status(400).json({ message: 'All parameters are needed' });
+  const { userId, type, amount } = req.body;
+
+  if (!userId || !type || !amount) return res.status(400).json({ message: 'All parameters are needed' });
 
   const wrongExpression = /^(?!expense$|payment$).*/i;
 
@@ -39,7 +40,7 @@ const addNewTransaction = asyncHandler(async (req, res) => {
 
   const arrayType = `${type}s`.toLowerCase(); // Expenses or Payments (type + s to make it plural)
 
-  const user = await User.updateOne({ _id: id }, { $push: { [arrayType]: transaction } }, { runValidators: true });
+  const user = await User.updateOne({ _id: userId }, { $push: { [arrayType]: transaction } }, { runValidators: true });
 
   if (!user) return res.status(400).json({ message: 'User not found' });
 

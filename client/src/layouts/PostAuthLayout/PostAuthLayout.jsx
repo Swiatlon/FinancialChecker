@@ -12,9 +12,13 @@ import AvatarSVG from '@/assets/images/icons/user.svg';
 import ConfigSVG from '@/assets/images/icons/settings.svg';
 import { ThemeUpdateContext } from '@/App';
 import alertForChoosingAppColor from '@/helpers/Alerts/Swal';
+import { useGetUserQuery } from '@/features/user/userApiSlice';
 
 function PostAuthLayout() {
-  const nickname = 'Wiercik';
+  const userID = '642a8c586fbecebb90f43374';
+  const { data, isLoading, isSuccess, isError, error } = useGetUserQuery(userID);
+  const user = data?.entities[userID];
+
   const updateAppColor = useContext(ThemeUpdateContext);
 
   return (
@@ -22,7 +26,7 @@ function PostAuthLayout() {
       <TopInformationBox>
         <UserInformationBox>
           <img src={AvatarSVG} alt="user avatar" />
-          <p>{nickname}</p>
+          <p>{user?.name ?? 'username'}</p>
         </UserInformationBox>
 
         <ConfigImg

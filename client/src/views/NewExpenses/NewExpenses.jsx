@@ -1,8 +1,14 @@
 import React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { NewExpensesContainer, ExpensesForm, TwoItemsPerRow, ExpensesItem } from './NewExpenses.style';
+import { useAddNewTransactionMutation } from '@/features/transactions/transactionsApiSlice';
 
 function NewExpenses() {
+
+  const userID = '642a8c586fbecebb90f43374';
+  // Redux
+  const [addNewTransaction, { isLoading, isError, data, error }] = useAddNewTransactionMutation();
+  // React Forms
   const {
     control,
     register,
@@ -27,7 +33,8 @@ function NewExpenses() {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
+    const { amount } = data;
+    await addNewTransaction({ userId: userID, type: 'expense', amount }).unwrap();
   };
 
   return (

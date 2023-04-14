@@ -3,15 +3,32 @@ import { Chart as ChartJS } from 'chart.js/auto';
 import { useTheme } from 'styled-components';
 import { Line } from 'react-chartjs-2';
 import { OverviewContainer, BoxesContainer, SquareBox, RectangleBox, ChartBox, SideDiv } from './Overview.style';
+import { useGetTransactionsQuery } from '@/features/transactions/transactionsApiSlice';
+import { getMonthlyTransactions, getWeeklyExpenses } from '@/features/transactions/transactionsApiSlice';
 
 function Overview() {
   const theme = useTheme();
+  const userID = '642a8c586fbecebb90f43374';
 
-  const firstChart = {
-    labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
+  // Redux
+  const { data, isLoading, isSuccess, isError, error } = useGetTransactionsQuery(userID);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  const { expenses, payments } = data;
+  console.log(expenses);
+  const lastSixExpenses = [...expenses, ...Array(Math.max(0, 6 - expenses.length)).fill(null)].splice(0, 6);
+  const monthlyExpenses = getMonthlyTransactions(expenses);
+  const weeklyExpenses = getWeeklyExpenses(expenses);
+
+  // Charts
+  const weeklyChart = {
+    labels: [...Object.keys(weeklyExpenses)],
     datasets: [
       {
-        data: [0, 4000, 200, 1000, 300, 200, 1500, 3000, 20, 10],
+        data: [...Object.values(weeklyExpenses)],
         borderColor: theme.colors.neonColor,
         backgroundColor: 'white',
         pointBackgroundColor: 'white',
@@ -20,15 +37,11 @@ function Overview() {
     ],
   };
 
-  const secondChart = {
-    labels: [
-      ...Array(31)
-        .fill()
-        .map((_, i) => i + 1),
-    ],
+  const monthlyChart = {
+    labels: [...Object.keys(monthlyExpenses)],
     datasets: [
       {
-        data: [0, 4000, 200, 1000, 300, 200, 1500, 3000, 20, 10],
+        data: [...Object.values(monthlyExpenses)],
         borderColor: theme.colors.neonColor,
         pointBackgroundColor: 'white',
         pointBorderColor: 'black',
@@ -36,7 +49,7 @@ function Overview() {
     ],
   };
 
-  const firstOptions = {
+  const weeklyChartOptions = {
     responsive: true,
     aspectRadio: 10,
     plugins: {
@@ -46,7 +59,7 @@ function Overview() {
     },
   };
 
-  const secondOptions = {
+  const monthlyChartOptions = {
     responsive: true,
     aspectRadio: 10,
     plugins: {
@@ -69,24 +82,21 @@ function Overview() {
       <SideDiv>
         <h3>This Week:</h3>
         <ChartBox height="250px">
-          <Line data={firstChart} options={firstOptions} />
+          <Line data={weeklyChart} options={weeklyChartOptions} />
         </ChartBox>
       </SideDiv>
       <SideDiv>
         <h3>Last expeneses:</h3>
         <BoxesContainer amountOfBoxes="3">
-          <SquareBox>A</SquareBox>
-          <SquareBox>B</SquareBox>
-          <SquareBox>C</SquareBox>
-          <SquareBox>D</SquareBox>
-          <SquareBox>E</SquareBox>
-          <SquareBox>F</SquareBox>
+          {lastSixExpenses.map((expense, index) => (
+            <SquareBox key={index}>- {expense?.amount ?? 'Add data'}</SquareBox>
+          ))}
         </BoxesContainer>
       </SideDiv>
       <SideDiv>
         <h3>This Month:</h3>
         <ChartBox height="250px">
-          <Line data={secondChart} options={secondOptions} />
+          <Line data={monthlyChart} options={monthlyChartOptions} />
         </ChartBox>
       </SideDiv>
     </OverviewContainer>

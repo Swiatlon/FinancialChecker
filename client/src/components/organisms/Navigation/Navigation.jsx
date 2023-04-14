@@ -20,12 +20,12 @@ function Navigation() {
   ];
 
   const navigationItemsAfterAuth = [
-    { text: 'Overview', icon: homeIcon },
+    { text: 'home', icon: homeIcon },
     { text: 'My Wallet', icon: cardIcon },
     { text: 'Add new expenses', icon: expensesIcon },
   ];
 
-  const isAuthorized = false;
+  const isAuthorized = true;
 
   const navigationContent = () => {
     // POST AUTH

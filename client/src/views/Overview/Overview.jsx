@@ -1,10 +1,17 @@
 import React from 'react';
 import { Chart as ChartJS } from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useTheme } from 'styled-components';
 import { Line } from 'react-chartjs-2';
 import { OverviewContainer, BoxesContainer, SquareBox, RectangleBox, ChartBox, SideDiv } from './Overview.style';
-import { useGetTransactionsQuery } from '@/features/transactions/transactionsApiSlice';
-import { getMonthlyTransactions, getWeeklyExpenses } from '@/features/transactions/transactionsApiSlice';
+import {
+  useGetTransactionsQuery,
+  getMonthlyTransactions,
+  getWeeklyExpenses,
+  getLastSixExpenses,
+  getMonthlyBalance,
+  getMoneyBalance,
+} from '@/features/transactions/transactionsApiSlice';
 
 function Overview() {
   const theme = useTheme();
@@ -18,12 +25,16 @@ function Overview() {
   }
 
   const { expenses, payments } = data;
-  console.log(expenses);
-  const lastSixExpenses = [...expenses, ...Array(Math.max(0, 6 - expenses.length)).fill(null)].splice(0, 6);
+
   const monthlyExpenses = getMonthlyTransactions(expenses);
+  const lastSixExpenses = getLastSixExpenses(expenses);
   const weeklyExpenses = getWeeklyExpenses(expenses);
 
+  const monthlyBalance = getMonthlyBalance(monthlyExpenses, getMonthlyTransactions(payments));
+  const overallBalance = getMoneyBalance(expenses, payments);
   // Charts
+  ChartJS.register(ChartDataLabels);
+
   const weeklyChart = {
     labels: [...Object.keys(weeklyExpenses)],
     datasets: [
@@ -49,40 +60,43 @@ function Overview() {
     ],
   };
 
-  const weeklyChartOptions = {
+  const chartOptions = {
     responsive: true,
     aspectRadio: 10,
+    layout: {
+      padding: 20,
+    },
     plugins: {
       legend: {
         display: false,
+      },
+      datalabels: {
+        display: true,
+        color: 'gray',
+        anchor: 'end',
+        offset: 0, // Add margin between label and data point
+        align: 'top', // Align label text to the top
       },
     },
   };
 
-  const monthlyChartOptions = {
-    responsive: true,
-    aspectRadio: 10,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  };
   return (
     <OverviewContainer>
       <SideDiv>
         <h3>My Wallet:</h3>
         <BoxesContainer amountOfBoxes="2">
-          <RectangleBox>Amount:&nbsp;0</RectangleBox>
-          <RectangleBox>
-            Monthly Balance: <span className="expenses-red-color">&nbsp;-3423</span>
+          <RectangleBox moneyBalance={overallBalance}>
+            Amount:<span>&nbsp;{overallBalance}</span>
+          </RectangleBox>
+          <RectangleBox moneyBalance={monthlyBalance}>
+            Monthly Balance: <span>&nbsp;{monthlyBalance}</span>
           </RectangleBox>
         </BoxesContainer>
       </SideDiv>
       <SideDiv>
         <h3>This Week:</h3>
         <ChartBox height="250px">
-          <Line data={weeklyChart} options={weeklyChartOptions} />
+          <Line data={weeklyChart} options={chartOptions} />
         </ChartBox>
       </SideDiv>
       <SideDiv>
@@ -96,7 +110,7 @@ function Overview() {
       <SideDiv>
         <h3>This Month:</h3>
         <ChartBox height="250px">
-          <Line data={monthlyChart} options={monthlyChartOptions} />
+          <Line data={monthlyChart} options={chartOptions} />
         </ChartBox>
       </SideDiv>
     </OverviewContainer>

@@ -8,23 +8,20 @@ const initialState = transactionsAdapter.getInitialState();
 export const transactionsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getTransactions: builder.query({
-      query: () => 'api/transaction',
+      query: (userID) => `api/transaction?id=${userID}`,
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
-      transformResponse: (responseData) => {
-        const loadedTransactions = responseData.map((transaction) => {
-          transaction.id = transaction._id;
-          return transaction;
-        });
-        return transactionsAdapter.setAll(initialState, loadedTransactions);
+      transformResponse: (response) => {
+        const sortedExpenses = response.expenses.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        response.expenses = sortedExpenses;
+
+        const sortedPayments = response.payments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        response.payments = sortedPayments;
+
+        return response;
       },
-      providesTags: (result, error, arg) => {
-        if (result?.ids) {
-          return [{ type: 'Transactions', id: 'LIST' }, ...result.ids.map((id) => ({ type: 'Transactions', id }))];
-        }
-        return [{ type: 'Transactions', id: 'LIST' }];
-      },
+      providesTags: ['Transaction'],
     }),
 
     addNewTransaction: builder.mutation({
@@ -33,8 +30,63 @@ export const transactionsApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: initialTransaction,
       }),
+      invalidatesTags: ['Transaction'],
     }),
   }),
 });
 
 export const { useGetTransactionsQuery, useAddNewTransactionMutation } = transactionsApiSlice;
+
+export function getMonthlyTransactions(array) {
+  const now = new Date();
+  const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+  const dailyTransaction = {};
+
+  array
+    .filter(
+      (transaction) => new Date(transaction.createdAt) >= startOfMonth && new Date(transaction.createdAt) <= endOfMonth,
+    )
+    // Summary Daily Transactions
+    .forEach((transaction) => {
+      const date = new Date(transaction.createdAt).toLocaleDateString('en-gb', { day: 'numeric' });
+      const { amount } = transaction;
+
+      if (dailyTransaction[date]) {
+        dailyTransaction[date] += amount;
+      } else {
+        dailyTransaction[date] = amount;
+      }
+    });
+
+  return dailyTransaction;
+}
+
+export function getWeeklyExpenses(array) {
+  const now = new Date();
+  const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 1); // Monday
+  const endOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 7); // Sunday
+
+  const days = ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
+
+  const dailyExpenses = {};
+
+  array
+    .filter(
+      (transaction) => new Date(transaction.createdAt) >= startOfWeek && new Date(transaction.createdAt) <= endOfWeek,
+    )
+    .forEach((transaction) => {
+      const date = new Date(transaction.createdAt);
+      const dayOfWeek = date.getDay() - 1;
+      const { amount } = transaction;
+
+      if (dailyExpenses[days[dayOfWeek]]) {
+        dailyExpenses[days[dayOfWeek]] += amount;
+      } else {
+        dailyExpenses[days[dayOfWeek]] = amount;
+      }
+    });
+
+  return dailyExpenses;
+}

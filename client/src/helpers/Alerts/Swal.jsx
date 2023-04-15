@@ -75,4 +75,14 @@ const alertForChoosingAppColor = (updateColor) => {
   });
 };
 
+export const alertForSuccessfulAction = (message) =>{
+  MySwal.fire({
+    icon: 'success',
+    title: 'Succeed!',
+    text: `${message !== undefined ? message : 'Your action was succesful!'}`,
+    showConfirmButton: false,
+    timer: 2000,
+  });
+
+}
 export default alertForChoosingAppColor;

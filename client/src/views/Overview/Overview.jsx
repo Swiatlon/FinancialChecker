@@ -15,7 +15,7 @@ import {
 
 function Overview() {
   const theme = useTheme();
-  const userID = '642a8c586fbecebb90f43374';
+  const userID = '643b01db84f83eafe6445864';
 
   // Redux
   const { data, isLoading, isSuccess, isError, error } = useGetTransactionsQuery(userID);
@@ -24,8 +24,8 @@ function Overview() {
     return <div>Loading...</div>;
   }
 
-  const { expenses, payments } = data;
-  
+  const { expenses = [], payments = [] } = data ?? {};
+
   const monthlyExpenses = getMonthlyTransactions(expenses);
   const lastSixExpenses = getLastSixExpenses(expenses);
   const weeklyExpenses = getWeeklyExpenses(expenses);

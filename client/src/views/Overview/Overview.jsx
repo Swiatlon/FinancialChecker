@@ -25,7 +25,7 @@ function Overview() {
   }
 
   const { expenses, payments } = data;
-
+  
   const monthlyExpenses = getMonthlyTransactions(expenses);
   const lastSixExpenses = getLastSixExpenses(expenses);
   const weeklyExpenses = getWeeklyExpenses(expenses);

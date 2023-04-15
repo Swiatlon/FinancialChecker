@@ -1,46 +1,73 @@
 const asyncHandler = require('express-async-handler');
 const mongoose = require('mongoose');
 const transactionSchema = require('../models/schemas/Transaction');
+const expenseSchema = require('../models/schemas/Expense');
+const itemSchema = require('../models/schemas/Item');
 const User = require('../models/User');
 
-const Transaction = mongoose.model('TransactionHistory', transactionSchema);
+const ItemModel = mongoose.model('Item', itemSchema);
+const ExpenseModel = mongoose.model('Expense', expenseSchema);
+const TransactionModel = mongoose.model('Transaction', transactionSchema);
 
 // @desc Get all user transactions
-// @route GET /transaction
+// @route GET api/transaction
 // @access PRIVATE
 const getAllUserTransactions = asyncHandler(async (req, res) => {
-  const { id } = req.query;
+  const { userID } = req.query;
 
-  if (!id) return res.status(400).json({ message: 'User id is missing to get transactions' });
+  if (!userID) return res.status(400).json({ message: 'User id is missing to get transactions' });
 
-  const transaction = await User.findOne({ _id: id }).select('payments expenses updatedAt').lean();
+  const transactions = await User.findOne({ _id: userID }).select('payments expenses updatedAt').lean();
 
-  if (!transaction) return res.status(400).json({ message: 'User not found' });
+  if (!transactions) return res.status(400).json({ message: 'User not found' });
 
-  return res.json(transaction);
+  return res.json(transactions);
 });
 
 /*--------------------------------------------------------------*/
 
 // @desc Send new expense or payment
-// @route POST /transaction
+// @route POST api/transaction
 // @access PRIVATE
 
 const addNewTransaction = asyncHandler(async (req, res) => {
+  const { userID, type, amount, title, location, items } = req.body;
 
-  const { userId, type, amount } = req.body;
-
-  if (!userId || !type || !amount) return res.status(400).json({ message: 'All parameters are needed' });
+  if (!userID || !type || !amount) return res.status(400).json({ message: 'All parameters are needed' });
 
   const wrongExpression = /^(?!expense$|payment$).*/i;
 
   if (wrongExpression.test(type)) return res.status(400).json({ message: 'Transaction wrong type' });
 
-  const transaction = new Transaction({ amount });
+  let user;
 
-  const arrayType = `${type}s`.toLowerCase(); // Expenses or Payments (type + s to make it plural)
+  // Expense
 
-  const user = await User.updateOne({ _id: userId }, { $push: { [arrayType]: transaction } }, { runValidators: true });
+  if (type.toLowerCase() === 'expense') {
+    const expense = new ExpenseModel({ title, amount, location, items });
+
+    // items
+    const validatedItems = [];
+
+    items.forEach((element) => {
+      const item = new ItemModel(element);
+      validatedItems.push(item);
+    });
+
+    expense.items = validatedItems;
+    
+    // result
+
+    user = await User.updateOne({ _id: userID }, { $push: { expenses: expense } }, { runValidators: true });
+  }
+
+  // Payment
+
+  if (type.toLowerCase() === 'payment') {
+    const payment = new TransactionModel({ amount, title });
+
+    user = await User.updateOne({ _id: userID }, { $push: { payments: payment } }, { runValidators: true });
+  }
 
   if (!user) return res.status(400).json({ message: 'User not found' });
 
@@ -50,20 +77,20 @@ const addNewTransaction = asyncHandler(async (req, res) => {
 /*--------------------------------------------------------------*/
 
 // @desc Delete all user transaction database
-// @route DELETE /transaction
+// @route DELETE api/transaction
 // @access PRIVATE
 
 const deleteAllUserTransactions = asyncHandler(async (req, res) => {
-  const { id } = req.body;
+  const { userID } = req.body;
 
-  if (!id) return res.status(400).json({ message: 'All fields are required!' });
+  if (!userID) return res.status(400).json({ message: 'All fields are required!' });
 
-  const user = await User.findById(id).exec();
+  const user = await User.findById(userID).exec();
 
   if (!user) return res.status(400).json({ message: 'User not found!' });
 
   const result = await User.updateOne(
-    { _id: id },
+    { _id: userID },
     {
       $set: {
         payments: [],

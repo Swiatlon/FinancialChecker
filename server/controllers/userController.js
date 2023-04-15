@@ -3,12 +3,12 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 // @desc Get user
-// @route GET /users
+// @route GET api/user
 // @access PRIVATE
 
 const getUser = asyncHandler(async (req, res) => {
   const { id } = req.query;
-  
+
   if (!id) return res.status(400).json({ message: 'Id required!' });
 
   const user = await User.findOne({ _id: id }).select('id email name createdAt updatedAt').lean();
@@ -21,7 +21,7 @@ const getUser = asyncHandler(async (req, res) => {
 /*--------------------------------------------------------------*/
 
 // @desc Create new user
-// @route POST /users
+// @route POST api/user
 // @access PUBLIC
 
 const createNewUser = asyncHandler(async (req, res) => {
@@ -56,7 +56,7 @@ const createNewUser = asyncHandler(async (req, res) => {
 /*--------------------------------------------------------------*/
 
 // @desc Update a user
-// @route PATCH /users
+// @route PATCH api/user
 // @access PRIVATE
 
 const updateUser = asyncHandler(async (req, res) => {
@@ -83,7 +83,7 @@ const updateUser = asyncHandler(async (req, res) => {
 /*--------------------------------------------------------------*/
 
 // @desc Delete a user
-// @route DELETE /users
+// @route DELETE api/user
 // @access  PRIVATE
 
 const deleteUser = asyncHandler(async (req, res) => {

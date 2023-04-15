@@ -2,9 +2,8 @@ import React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { NewExpensesContainer, ExpensesForm, TwoItemsPerRow, ExpensesItem } from './NewExpenses.style';
 import { useAddNewTransactionMutation } from '@/features/transactions/transactionsApiSlice';
-
+import { alertForErrors, alertForSuccessfulAction } from '@/helpers/Alerts/Swal';
 function NewExpenses() {
-
   const userID = '642a8c586fbecebb90f43374';
   // Redux
   const [addNewTransaction, { isLoading, isError, data, error }] = useAddNewTransactionMutation();
@@ -12,6 +11,7 @@ function NewExpenses() {
   const {
     control,
     register,
+    reset,
     formState: { errors },
     handleSubmit,
   } = useForm({});
@@ -34,7 +34,15 @@ function NewExpenses() {
 
   const onSubmit = async (data) => {
     const { amount } = data;
-    await addNewTransaction({ userId: userID, type: 'expense', amount }).unwrap();
+    await addNewTransaction({ userId: userID, type: 'expense', amount })
+      .unwrap()
+      .then(() => {
+        reset(); // This will reset all form values
+        remove(); // Reset all items
+        if (isError) return alertForErrors("Your data hasn't been sent");
+
+        return alertForSuccessfulAction('Data sent successfuly!');
+      });
   };
 
   return (

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const transactionSchema = require('./schemas/Transaction');
+const expenseSchema = require('./schemas/Expense');
 
 const userSchema = new mongoose.Schema(
   {
@@ -10,6 +11,9 @@ const userSchema = new mongoose.Schema(
 
     name: {
       type: String,
+      default: () => {
+        return this.email.split('@')[0]; // Set name as the part before the @ symbol
+      },
     },
 
     password: {
@@ -19,9 +23,8 @@ const userSchema = new mongoose.Schema(
 
     payments: [transactionSchema],
 
-    expenses: [transactionSchema],
+    expenses: [expenseSchema],
   },
-  // Update with newTransaction ?
   { timestamps: true },
 );
 

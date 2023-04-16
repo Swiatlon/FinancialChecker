@@ -49,13 +49,12 @@ const addNewTransaction = asyncHandler(async (req, res) => {
     // items
     const validatedItems = [];
 
-    items.forEach((element) => {
+    items?.forEach((element) => {
       const item = new ItemModel(element);
       validatedItems.push(item);
     });
 
     expense.items = validatedItems;
-    
     // result
 
     user = await User.updateOne({ _id: userID }, { $push: { expenses: expense } }, { runValidators: true });

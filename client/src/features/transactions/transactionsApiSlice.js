@@ -65,9 +65,13 @@ export function getMonthlyTransactions(array) {
 
 export function getWeeklyExpenses(array) {
   const now = new Date();
-  const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 1); // Monday
-  const endOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay() + 7); // Sunday
 
+  const currentDay = now.getDay();
+  const daysSinceMonday = currentDay === 0 ? 6 : currentDay - 1;
+
+  const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - daysSinceMonday); // Monday
+  const endOfWeek = new Date(now.getFullYear(), now.getMonth(), startOfWeek.getDate() + 6); // Sunday
+  
   const days = ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
 
   const dailyExpenses = {};

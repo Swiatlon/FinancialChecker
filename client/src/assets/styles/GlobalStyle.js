@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
 }
 #root{
     width: 100%;
-   contain: paint;
+    contain: paint;
     min-height: 100vh;
     display: grid;
     background: #171717;
@@ -31,6 +31,9 @@ a{
 .show{
     display: initial;
 }
+.error-color{
+    color: red;
+}
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -40,12 +43,6 @@ input:-webkit-autofill:active {
     -webkit-transition-delay: 9999s;
 }
 
-// Alerts custom styles
-.swal2-popup{
-    color:white;
-    background: #0f1216;
-    transition: 1s all;
-}
 `;
 
 export default GlobalStyle;

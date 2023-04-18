@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Layout from './layouts/MainLayout/MainLayout';
 import theme from './assets/theme/theme';
+import CustomClassesStyle from './assets/styles/CustomClasses.style';
 
 export const ThemeUpdateContext = createContext();
 
@@ -19,6 +20,9 @@ function App() {
   return (
     <ThemeUpdateContext.Provider value={setAppDesignColor}>
       <ThemeProvider theme={theme}>
+        <CustomClassesStyle
+          key={theme.colors.neonColor} /* We pass there key only to refresh it whenever component update */
+        />
         <Layout />
       </ThemeProvider>
     </ThemeUpdateContext.Provider>

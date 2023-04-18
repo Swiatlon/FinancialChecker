@@ -2,11 +2,23 @@ import React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { NewExpensesContainer, ExpensesForm, TwoItemsPerRow, ExpensesItem } from './NewExpenses.style';
 import { useAddNewTransactionMutation } from '@/features/transactions/transactionsApiSlice';
-import { alertForErrors, alertForSuccessfulAction } from '@/helpers/Alerts/Swal';
+import { alertForErrors, alertForSuccessfulAction, alertForMoneyIncorrecntess } from '@/helpers/Alerts/Swal';
+
 function NewExpenses() {
   const userID = '643b01db84f83eafe6445864';
+
+  // Validation
+  const regexpForNoNumbers = /^[A-Za-z-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/i;
+  const regexpForMinTwoLetters = /^(?=.*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$/;
+
+  const requiredOptions = { value: true, message: 'Field is required!' };
+  const onlyNumberOptions = { value: true, message: 'Field need to be numer type!' };
+
+  const patternMessage = 'You need to meet the pattern validation!';
+
   // Redux
   const [addNewTransaction, { isLoading, isError, data, error }] = useAddNewTransactionMutation();
+
   // React Forms
   const {
     control,
@@ -17,9 +29,11 @@ function NewExpenses() {
   } = useForm({});
 
   const { fields, append, remove } = useFieldArray({
-    name: 'Items',
+    name: 'items',
     control,
   });
+
+  // React Forms Functions
 
   const addNewItem = () => {
     append({
@@ -33,8 +47,24 @@ function NewExpenses() {
   };
 
   const onSubmit = async (data) => {
-    const { amount } = data;
-    await addNewTransaction({ userId: userID, type: 'expense', amount })
+    let userConfirm = true;
+    let { amount } = data;
+    const { location, title, items } = data;
+
+    const totalMoneyAmountOfItems = Object.values(items.length > 0 ? items : 0)
+      .map((item) => item.value)
+      .reduce((a, b) => a + b, 0);
+
+    if (totalMoneyAmountOfItems > amount)
+      await alertForMoneyIncorrecntess().then((isConfirmed) => {
+        userConfirm = isConfirmed;
+      });
+
+    if (!userConfirm) return alertForErrors("Your data hasn't been sent");
+
+    amount = totalMoneyAmountOfItems;
+    alertForSuccessfulAction('Data sent successfuly!');
+    await addNewTransaction({ userID, type: 'expense', amount, title, location })
       .unwrap()
       .then(() => {
         reset(); // This will reset all form values
@@ -49,15 +79,43 @@ function NewExpenses() {
     <NewExpensesContainer>
       <ExpensesForm onSubmit={handleSubmit(onSubmit)}>
         <h2>New Expenses</h2>
-        <input {...register('title', { required: true })} placeholder="Title" />
 
         <input
-          {...register('amount', { required: true, min: 0, valueAsNumber: true })}
+          {...register('title', {
+            required: requiredOptions,
+            pattern: {
+              value: regexpForNoNumbers,
+              message: patternMessage,
+            },
+            maxLength: 20,
+          })}
+          placeholder="Title"
+        />
+        {errors.title && <p className="error-color">{errors.title.message}</p>}
+
+        <input
+          {...register('amount', {
+            required: requiredOptions,
+            min: 0,
+            valueAsNumber: onlyNumberOptions,
+          })}
           placeholder="Amount"
           type="number"
         />
+        {errors.amount && <p className="error-color">{errors.amount.message}</p>}
 
-        <input {...register('location', { required: false })} placeholder="Location" />
+        <input
+          {...register('location', {
+            required: false,
+            pattern: {
+              value: regexpForMinTwoLetters,
+              message: patternMessage,
+            },
+            maxLength: 20,
+          })}
+          placeholder="Location"
+        />
+        {errors.location && <p className="error-color">{errors.location.message}</p>}
 
         <TwoItemsPerRow>
           <p>Add Item</p>
@@ -66,23 +124,39 @@ function NewExpenses() {
 
         {fields.map((field, index) => {
           return (
-            <ExpensesItem key={field.id}>
-              <input {...register(`Items.${index}.name`, { required: true })} placeholder="Item" />
+            <>
+              <ExpensesItem key={field.id}>
+                <input
+                  {...register(`items.${index}.name`, {
+                    required: requiredOptions,
+                    pattern: {
+                      value: regexpForNoNumbers,
+                      message: patternMessage,
+                    },
+                    maxLength: 20,
+                  })}
+                  placeholder="Item"
+                />
 
-              <input
-                {...register(`Items.${index}.value`, { required: true, valueAsNumber: true })}
-                placeholder="Value"
-                type="Number"
-              />
+                <input
+                  {...register(`items.${index}.value`, { required: requiredOptions, valueAsNumber: onlyNumberOptions })}
+                  placeholder="Value"
+                  type="Number"
+                />
 
-              <input
-                type="button"
-                value="X"
-                onClick={() => {
-                  deleteItem(index);
-                }}
-              />
-            </ExpensesItem>
+                <input
+                  type="button"
+                  value="X"
+                  onClick={() => {
+                    deleteItem(index);
+                  }}
+                />
+              </ExpensesItem>
+
+              {errors.items && errors.items[index] && (
+                <p className="error-color">{errors.items[index].name?.message || errors.items[index].value?.message}</p>
+              )}
+            </>
           );
         })}
         <input type="submit" value="Submit" />

@@ -6,6 +6,9 @@ export const NewExpensesContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  .error-color {
+    text-align: center;
+  }
 `;
 
 export const ExpensesForm = styled.form`

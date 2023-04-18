@@ -64,7 +64,7 @@ function Overview() {
     responsive: true,
     aspectRadio: 10,
     layout: {
-      padding: 20,
+      padding: 25,
     },
     plugins: {
       legend: {
@@ -72,10 +72,15 @@ function Overview() {
       },
       datalabels: {
         display: true,
-        color: 'gray',
+        color: 'silver',
         anchor: 'end',
         offset: 0, // Add margin between label and data point
         align: 'top', // Align label text to the top
+        textShadowColor: 'black',
+        textShadowBlur: 4,
+        textShadowOffsetX: 2,
+        textShadowOffsetY: 2,
+        z: 1,
       },
     },
   };

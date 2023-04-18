@@ -75,7 +75,7 @@ const alertForChoosingAppColor = (updateColor) => {
   });
 };
 
-export const alertForSuccessfulAction = (message) =>{
+export const alertForSuccessfulAction = (message) => {
   MySwal.fire({
     icon: 'success',
     title: 'Succeed!',
@@ -83,6 +83,24 @@ export const alertForSuccessfulAction = (message) =>{
     showConfirmButton: false,
     timer: 2000,
   });
+};
 
-}
+export const alertForMoneyIncorrecntess = async () => {
+  let result;
+
+  await MySwal.fire({
+    icon: 'question',
+    title: 'Incorrect money amount',
+    text: `The amount of items are higher than overall amount. If you send data we will change your total amount to sum of items.`,
+    showConfirmButton: true,
+    showCancelButton: true,
+    confirmButtonText: 'Yes, do it!',
+    cancelButtonText: 'No, cancel',
+  }).then(({ isConfirmed }) => {
+    result = isConfirmed;
+  });
+
+  return result;
+};
+
 export default alertForChoosingAppColor;

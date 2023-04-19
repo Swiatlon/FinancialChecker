@@ -58,13 +58,12 @@ function NewExpenses() {
     if (totalMoneyAmountOfItems > amount)
       await alertForMoneyIncorrecntess().then((isConfirmed) => {
         userConfirm = isConfirmed;
+        amount = totalMoneyAmountOfItems;
       });
 
     if (!userConfirm) return alertForErrors("Your data hasn't been sent");
 
-    amount = totalMoneyAmountOfItems;
-    alertForSuccessfulAction('Data sent successfuly!');
-    await addNewTransaction({ userID, type: 'expense', amount, title, location })
+    await addNewTransaction({ userID, type: 'expense', amount, title, location, items })
       .unwrap()
       .then(() => {
         reset(); // This will reset all form values
@@ -96,7 +95,7 @@ function NewExpenses() {
         <input
           {...register('amount', {
             required: requiredOptions,
-            min: 0,
+            min: 1,
             valueAsNumber: onlyNumberOptions,
           })}
           placeholder="Amount"

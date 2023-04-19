@@ -20,7 +20,7 @@ function Navigation() {
   ];
 
   const navigationItemsAfterAuth = [
-    { text: 'home', icon: homeIcon },
+    { text: 'Home', icon: homeIcon },
     { text: 'My Wallet', icon: cardIcon },
     { text: 'Add new expenses', icon: expensesIcon },
   ];

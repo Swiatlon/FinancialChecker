@@ -27,6 +27,8 @@ app.use('/api', require('./routes/userRoutes'));
 
 app.use('/api', require('./routes/transactionsRoutes'));
 
+app.use('/auth', require('./routes/authRoutes'));
+
 app.use(errorHandler);
 
 mongoose.connection.once('open', () => {

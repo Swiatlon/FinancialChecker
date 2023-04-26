@@ -103,4 +103,14 @@ export const alertForMoneyIncorrecntess = async () => {
   return result;
 };
 
+export const alertForSessionExpired = () => {
+  MySwal.fire({
+    icon: 'info',
+    title: 'Session Expired',
+    text: 'Please login again, your session expired.',
+    showConfirmButton: true,
+    showCancelButton: false,
+  });
+};
+
 export default alertForChoosingAppColor;

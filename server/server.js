@@ -7,15 +7,12 @@ const mongoose = require('mongoose');
 const errorHandler = require('./middleware/errorHandler');
 const corsOptions = require('./config/corsOptions');
 const connectDB = require('./config/dbConn');
-const { logger, logEvents } = require('./middleware/logger');
 
 const app = express();
 
 const PORT = process.env.PORT || 3500;
 
 connectDB();
-
-app.use(logger);
 
 app.use(cors(corsOptions));
 
@@ -38,5 +35,4 @@ mongoose.connection.once('open', () => {
 
 mongoose.connection.on('error', (err) => {
   console.log(err);
-  logEvents(`${err.no}\t${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log');
 });

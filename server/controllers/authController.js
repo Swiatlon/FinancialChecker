@@ -18,7 +18,7 @@ const login = asyncHandler(async (req, res) => {
 
   const match = await bcrypt.compare(password, foundUser.password);
 
-  if (!match) return res.status(401).json({ message: 'Unathorized!' });
+  if (!match) return res.status(401).json({ message: 'Password or email not correct!' });
 
   // After everything is correct we set JWT Tokens
 
@@ -26,10 +26,11 @@ const login = asyncHandler(async (req, res) => {
     {
       UserInfo: {
         email: foundUser.email,
+        id: foundUser._id,
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: '30m' },
+    { expiresIn: '5s' },
   );
 
   const refreshToken = jwt.sign(
@@ -37,15 +38,15 @@ const login = asyncHandler(async (req, res) => {
       email: foundUser.email,
     },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: '1d' },
+    { expiresIn: '15s' },
   );
-
+  const cookieTime = 7 * 24 * 60 * 60 * 1000; // 7 days
   // Create secure cookie with refresh token
   res.cookie('jwt', refreshToken, {
     httpOnly: true, // accessible only by web server
     secure: true, // https
     sameSite: 'None', // cross-site cookie
-    maxAge: 7 * 24 * 60 * 60 * 1000, // cookie expiry: set to match refreshToken
+    maxAge: cookieTime, // cookie expiry: set to match refreshToken
   });
 
   // Send accessToken containingemail
@@ -58,6 +59,7 @@ const login = asyncHandler(async (req, res) => {
 
 const refresh = (req, res) => {
   const { cookies } = req;
+
   if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized!' });
 
   const refreshToken = cookies.jwt;
@@ -66,7 +68,7 @@ const refresh = (req, res) => {
     refreshToken,
     process.env.REFRESH_TOKEN_SECRET,
     asyncHandler(async (err, decoded) => {
-      if (err) return res.status(403).json({ message: 'Forbidden' });
+      if (err) return res.status(403).json({ message: 'Session expired' });
 
       const foundUser = await User.findOne({ email: decoded.email }).exec();
 
@@ -76,10 +78,11 @@ const refresh = (req, res) => {
         {
           UserInfo: {
             email: foundUser.email,
+            id: foundUser._id,
           },
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '15m' },
+        { expiresIn: '15s' },
       );
 
       return res.json({ accessToken });

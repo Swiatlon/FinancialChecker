@@ -39,4 +39,16 @@ export const ThreeButtonsBox = styled.div`
     transform: scale(1.2);
   }
 `;
+
+export const PostAuthContainer = styled.div`
+  max-width: max-content;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15vh;
+  align-content: center;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
 export default HomeBox;

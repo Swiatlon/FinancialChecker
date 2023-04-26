@@ -13,6 +13,7 @@ import PreAuthLayout from './layouts/PreAuthLayout/PreAuthLayout';
 import Register from './views/Register/Register';
 import Login from './views/Login/Login';
 import store from './app/store';
+import PersistLogin from './components/organisms/PersistLogin/PersistLogin';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        // PUBLIC ROUTES
         path: '',
         element: <PreAuthLayout />,
         children: [
@@ -31,11 +33,18 @@ const router = createBrowserRouter([
         ],
       },
       {
+        // PROTECTED ROUTES
         path: 'postAuth',
-        element: <PostAuthLayout />,
+        element: <PersistLogin />,
         children: [
-          { path: 'home', element: <Overview /> },
-          { path: 'addnewExpenses', element: <NewExpenses /> },
+          {
+            element: <PostAuthLayout />,
+            children: [
+              { path: '', element: <Home /> },
+              { path: 'home', element: <Overview /> },
+              { path: 'addNewExpenses', element: <NewExpenses /> },
+            ],
+          },
         ],
       },
     ],

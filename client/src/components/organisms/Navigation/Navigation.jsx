@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useSendLogoutMutation } from '@/features/auth/authApiSlice';
+import { selectCurrentToken, logOut } from '@/features/auth/authSlice';
 import { NavBar, Menu, MenuItem, LogoHamburgerContainer, LogoContentBox, LogoutButton } from './Navigation.style';
 import LogoImage from '@/assets/images/logo.jpg';
 import Logo from '@/components/atoms/Logo.style';
@@ -11,6 +15,17 @@ import logoutIcon from '@/assets/images/icons/log-out.svg';
 import registerIcon from '@/assets/images/icons/user-plus.svg';
 
 function Navigation() {
+  // React Router
+
+  const navigate = useNavigate();
+
+  // Redux
+  const currentToken = useSelector(selectCurrentToken);
+  console.log(`Navigation access: ${currentToken}`);
+
+  const [sendLogout, { isLoading, isSuccess, isError, error }] = useSendLogoutMutation();
+
+  // React
   const [isMenuVisible, setIsMenuVisible] = useState(true);
 
   const navigationItemsPreAuth = [
@@ -25,7 +40,19 @@ function Navigation() {
     { text: 'Add new expenses', icon: expensesIcon },
   ];
 
-  const isAuthorized = true;
+  const isAuthorized = currentToken ? true : false;
+  // Handlers
+
+  const handleClick = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
+
+  const handleLogout = () => {
+    sendLogout();
+    navigate('/home');
+  };
+
+  // Content
 
   const navigationContent = () => {
     // POST AUTH
@@ -38,7 +65,7 @@ function Navigation() {
               {item.text}
             </MenuItem>
           ))}
-          {isAuthorized && <LogoutButton src={logoutIcon} alt="logout-icon" />}
+          {isAuthorized && <LogoutButton src={logoutIcon} alt="logout-icon" onClick={handleLogout} />}
         </>
       );
 
@@ -51,10 +78,6 @@ function Navigation() {
         </MenuItem>
       ));
     }
-  };
-
-  const handleClick = () => {
-    setIsMenuVisible(!isMenuVisible);
   };
 
   return (

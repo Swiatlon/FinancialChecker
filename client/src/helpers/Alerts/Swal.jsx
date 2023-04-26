@@ -113,4 +113,14 @@ export const alertForSessionExpired = () => {
   });
 };
 
+export const alertForSucessfullLogin = (navigateToOverview) => {
+  MySwal.fire({
+    icon: 'success',
+    title: 'Succeed!',
+    text: 'Succesfully logged in!',
+    showConfirmButton: false,
+    timer: 2000,
+  }).then(() => navigateToOverview());
+};
+
 export default alertForChoosingAppColor;

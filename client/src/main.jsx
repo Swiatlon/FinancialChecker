@@ -14,6 +14,8 @@ import Register from './views/Register/Register';
 import Login from './views/Login/Login';
 import store from './app/store';
 import PersistLogin from './components/organisms/PersistLogin/PersistLogin';
+import Prefetch from './components/organisms/Prefetch/Prefetch';
+import PostAuthHome from './views/PostAuthHome/PostAuthHome';
 
 const router = createBrowserRouter([
   {
@@ -38,11 +40,16 @@ const router = createBrowserRouter([
         element: <PersistLogin />,
         children: [
           {
-            element: <PostAuthLayout />,
+            element: <Prefetch />,
             children: [
-              { path: '', element: <Home /> },
-              { path: 'home', element: <Overview /> },
-              { path: 'addNewExpenses', element: <NewExpenses /> },
+              {
+                element: <PostAuthLayout />,
+                children: [
+                  { path: '', element: <PostAuthHome /> },
+                  { path: 'overview', element: <Overview /> },
+                  { path: 'addNewExpenses', element: <NewExpenses /> },
+                ],
+              },
             ],
           },
         ],

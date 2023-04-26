@@ -11,6 +11,7 @@ import HamburgerSrc from '@/assets/images/icons/hamburger.svg';
 import cardIcon from '@/assets/images/icons/credit-card.svg';
 import homeIcon from '@/assets/images/icons/home.svg';
 import expensesIcon from '@/assets/images/icons/trending-down.svg';
+import overviewIcon from '@/assets/images/icons/bar-chart-2.svg';
 import logoutIcon from '@/assets/images/icons/log-out.svg';
 import registerIcon from '@/assets/images/icons/user-plus.svg';
 
@@ -21,7 +22,6 @@ function Navigation() {
 
   // Redux
   const currentToken = useSelector(selectCurrentToken);
-  console.log(`Navigation access: ${currentToken}`);
 
   const [sendLogout, { isLoading, isSuccess, isError, error }] = useSendLogoutMutation();
 
@@ -35,7 +35,8 @@ function Navigation() {
   ];
 
   const navigationItemsAfterAuth = [
-    { text: 'Home', icon: homeIcon },
+    { text: '', icon: homeIcon },
+    { text: 'Overview', icon: overviewIcon },
     { text: 'My Wallet', icon: cardIcon },
     { text: 'Add new expenses', icon: expensesIcon },
   ];

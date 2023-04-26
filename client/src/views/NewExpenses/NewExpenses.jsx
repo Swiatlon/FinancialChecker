@@ -3,9 +3,10 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { NewExpensesContainer, ExpensesForm, TwoItemsPerRow, ExpensesItem } from './NewExpenses.style';
 import { useAddNewTransactionMutation } from '@/features/transactions/transactionsApiSlice';
 import { alertForErrors, alertForSuccessfulAction, alertForMoneyIncorrecntess } from '@/helpers/Alerts/Swal';
+import useAuth from '@/hooks/useAuth';
 
 function NewExpenses() {
-  const userID = '643b01db84f83eafe6445864';
+  const { id: userID } = useAuth();
 
   // Validation
   const regexpForNoNumbers = /^[A-Za-z-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/i;

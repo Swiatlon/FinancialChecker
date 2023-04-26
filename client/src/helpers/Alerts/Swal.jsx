@@ -103,4 +103,24 @@ export const alertForMoneyIncorrecntess = async () => {
   return result;
 };
 
+export const alertForSessionExpired = () => {
+  MySwal.fire({
+    icon: 'info',
+    title: 'Session Expired',
+    text: 'Please login again, your session expired.',
+    showConfirmButton: true,
+    showCancelButton: false,
+  });
+};
+
+export const alertForSucessfullLogin = (navigateToOverview) => {
+  MySwal.fire({
+    icon: 'success',
+    title: 'Succeed!',
+    text: 'Succesfully logged in!',
+    showConfirmButton: false,
+    timer: 2000,
+  }).then(() => navigateToOverview());
+};
+
 export default alertForChoosingAppColor;

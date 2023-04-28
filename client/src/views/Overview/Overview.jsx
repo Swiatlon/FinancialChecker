@@ -1,37 +1,39 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Chart as ChartJS } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useTheme } from 'styled-components';
-import { Line } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 import { OverviewContainer, BoxesContainer, SquareBox, RectangleBox, ChartBox, SideDiv } from './Overview.style';
 import {
   useGetTransactionsQuery,
-  getMonthlyTransactions,
   getWeeklyExpenses,
   getLastSixExpenses,
-  getMonthlyBalance,
   getMoneyBalance,
+  getMonthlyTransactions,
+  getMonthlyBalance,
 } from '@/features/transactions/transactionsApiSlice';
+import Loader from '@/helpers/Loader/Loader';
+import useAuth from '@/hooks/useAuth';
 
 function Overview() {
   const theme = useTheme();
-  const userID = '643b01db84f83eafe6445864';
+  const { id: userID } = useAuth();
 
   // Redux
   const { data, isLoading, isSuccess, isError, error } = useGetTransactionsQuery(userID);
+  
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  if (isLoading) return <Loader />;
 
   const { expenses = [], payments = [] } = data ?? {};
 
   const monthlyExpenses = getMonthlyTransactions(expenses);
   const lastSixExpenses = getLastSixExpenses(expenses);
   const weeklyExpenses = getWeeklyExpenses(expenses);
-
   const monthlyBalance = getMonthlyBalance(monthlyExpenses, getMonthlyTransactions(payments));
   const overallBalance = getMoneyBalance(expenses, payments);
+
   // Charts
   ChartJS.register(ChartDataLabels);
 
@@ -56,12 +58,14 @@ function Overview() {
         borderColor: theme.colors.neonColor,
         pointBackgroundColor: 'white',
         pointBorderColor: 'black',
+        backgroundColor: theme.colors.neonColor,
       },
     ],
   };
 
   const chartOptions = {
     responsive: true,
+    // indexAxis: 'y',
     aspectRadio: 10,
     layout: {
       padding: 25,

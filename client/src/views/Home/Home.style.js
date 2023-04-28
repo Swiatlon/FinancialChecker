@@ -24,7 +24,8 @@ export const ThreeButtonsBox = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 25px;
-  a {
+  a,
+  button {
     padding: 15px;
     font-size: 14px;
     background: rgb(0, 0, 0);
@@ -35,8 +36,21 @@ export const ThreeButtonsBox = styled.div`
     cursor: pointer;
     transition: 1s all;
   }
-  a:hover {
+  a:hover,
+  button:hover {
     transform: scale(1.2);
   }
 `;
+
+export const PostAuthContainer = styled.div`
+  max-width: max-content;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15vh;
+  align-content: center;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
 export default HomeBox;

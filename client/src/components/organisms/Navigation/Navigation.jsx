@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useSendLogoutMutation } from '@/features/auth/authApiSlice';
+import { selectCurrentToken } from '@/features/auth/authSlice';
 import { NavBar, Menu, MenuItem, LogoHamburgerContainer, LogoContentBox, LogoutButton } from './Navigation.style';
 import LogoImage from '@/assets/images/logo.jpg';
 import Logo from '@/components/atoms/Logo.style';
@@ -7,10 +11,21 @@ import HamburgerSrc from '@/assets/images/icons/hamburger.svg';
 import cardIcon from '@/assets/images/icons/credit-card.svg';
 import homeIcon from '@/assets/images/icons/home.svg';
 import expensesIcon from '@/assets/images/icons/trending-down.svg';
+import overviewIcon from '@/assets/images/icons/bar-chart-2.svg';
 import logoutIcon from '@/assets/images/icons/log-out.svg';
 import registerIcon from '@/assets/images/icons/user-plus.svg';
 
 function Navigation() {
+  // React Router
+
+  const navigate = useNavigate();
+
+  // Redux
+  const currentToken = useSelector(selectCurrentToken);
+
+  const [sendLogout] = useSendLogoutMutation();
+
+  // React
   const [isMenuVisible, setIsMenuVisible] = useState(true);
 
   const navigationItemsPreAuth = [
@@ -21,11 +36,24 @@ function Navigation() {
 
   const navigationItemsAfterAuth = [
     { text: 'Home', icon: homeIcon },
+    { text: 'Overview', icon: overviewIcon },
     { text: 'My Wallet', icon: cardIcon },
     { text: 'Add new expenses', icon: expensesIcon },
   ];
 
-  const isAuthorized = true;
+  const isAuthorized = currentToken ? true : false;
+  // Handlers
+
+  const handleClick = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
+
+  const handleLogout = () => {
+    sendLogout();
+    navigate('/home');
+  };
+
+  // Content
 
   const navigationContent = () => {
     // POST AUTH
@@ -38,7 +66,7 @@ function Navigation() {
               {item.text}
             </MenuItem>
           ))}
-          {isAuthorized && <LogoutButton src={logoutIcon} alt="logout-icon" />}
+          {isAuthorized && <LogoutButton src={logoutIcon} alt="logout-icon" onClick={handleLogout} />}
         </>
       );
 
@@ -51,10 +79,6 @@ function Navigation() {
         </MenuItem>
       ));
     }
-  };
-
-  const handleClick = () => {
-    setIsMenuVisible(!isMenuVisible);
   };
 
   return (

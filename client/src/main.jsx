@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 import GlobalStyle from './assets/styles/GlobalStyle';
 import ErrorPage from './views/ErrorPage/ErrorPage';
 import App from './App';
@@ -13,6 +14,12 @@ import PreAuthLayout from './layouts/PreAuthLayout/PreAuthLayout';
 import Register from './views/Register/Register';
 import Login from './views/Login/Login';
 import store from './app/store';
+import PersistLogin from './components/organisms/PersistLogin/PersistLogin';
+import Prefetch from './components/organisms/Prefetch/Prefetch';
+import PostAuthHome from './views/PostAuthHome/PostAuthHome';
+import MyWallet from './views/MyWallet/MyWallet';
+
+disableReactDevTools();
 
 const router = createBrowserRouter([
   {
@@ -21,6 +28,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        // PUBLIC ROUTES
         path: '',
         element: <PreAuthLayout />,
         children: [
@@ -31,11 +39,25 @@ const router = createBrowserRouter([
         ],
       },
       {
+        // PROTECTED ROUTES
         path: 'postAuth',
-        element: <PostAuthLayout />,
+        element: <PersistLogin />,
         children: [
-          { path: 'home', element: <Overview /> },
-          { path: 'addnewExpenses', element: <NewExpenses /> },
+          {
+            element: <Prefetch />,
+            children: [
+              {
+                element: <PostAuthLayout />,
+                children: [
+                  { path: '', element: <PostAuthHome /> },
+                  { path: '*', element: <PostAuthHome /> },
+                  { path: 'myWallet', element: <MyWallet /> },
+                  { path: 'overview', element: <Overview /> },
+                  { path: 'addNewExpenses', element: <NewExpenses /> },
+                ],
+              },
+            ],
+          },
         ],
       },
     ],

@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 import GlobalStyle from './assets/styles/GlobalStyle';
 import ErrorPage from './views/ErrorPage/ErrorPage';
 import App from './App';
@@ -18,8 +17,6 @@ import PersistLogin from './components/organisms/PersistLogin/PersistLogin';
 import Prefetch from './components/organisms/Prefetch/Prefetch';
 import PostAuthHome from './views/PostAuthHome/PostAuthHome';
 import MyWallet from './views/MyWallet/MyWallet';
-
-disableReactDevTools();
 
 const router = createBrowserRouter([
   {

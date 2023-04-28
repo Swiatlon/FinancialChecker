@@ -12,7 +12,7 @@ function Home() {
 
   // Redux
   const dispatch = useDispatch();
-  const [login, { isLoading, isError, error }] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   async function logInGuest() {
     const guestEmail = import.meta.env.VITE_QUEST_EMAIL;

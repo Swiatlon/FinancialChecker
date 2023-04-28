@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useSendLogoutMutation } from '@/features/auth/authApiSlice';
-import { selectCurrentToken, logOut } from '@/features/auth/authSlice';
+import { selectCurrentToken } from '@/features/auth/authSlice';
 import { NavBar, Menu, MenuItem, LogoHamburgerContainer, LogoContentBox, LogoutButton } from './Navigation.style';
 import LogoImage from '@/assets/images/logo.jpg';
 import Logo from '@/components/atoms/Logo.style';
@@ -23,7 +23,7 @@ function Navigation() {
   // Redux
   const currentToken = useSelector(selectCurrentToken);
 
-  const [sendLogout, { isLoading, isSuccess, isError, error }] = useSendLogoutMutation();
+  const [sendLogout] = useSendLogoutMutation();
 
   // React
   const [isMenuVisible, setIsMenuVisible] = useState(true);
@@ -35,7 +35,7 @@ function Navigation() {
   ];
 
   const navigationItemsAfterAuth = [
-    { text: '', icon: homeIcon },
+    { text: 'Home', icon: homeIcon },
     { text: 'Overview', icon: overviewIcon },
     { text: 'My Wallet', icon: cardIcon },
     { text: 'Add new expenses', icon: expensesIcon },

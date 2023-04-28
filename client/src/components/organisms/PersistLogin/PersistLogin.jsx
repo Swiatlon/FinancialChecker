@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Loader from '@/helpers/Loader/Loader';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { alertForSessionExpired } from '@/helpers/Alerts/Swal';
@@ -32,9 +33,7 @@ const PersistLogin = () => {
         try {
           await refresh();
           setTrueSuccess(true);
-        } catch (err) {
-          console.error(err);
-        }
+        } catch (err) {}
       };
 
       if (!token && persist) verifyRefreshToken();
@@ -52,7 +51,7 @@ const PersistLogin = () => {
     content = <Outlet />;
   } else if (isLoading) {
     // persist: yes, token: no
-    content = <p>Loading</p>;
+    content = <Loader />;
   } else if (isError) {
     // persist: yes, token: no
     alertForSessionExpired();

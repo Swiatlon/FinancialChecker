@@ -20,41 +20,6 @@ const getUser = asyncHandler(async (req, res) => {
 
 /*--------------------------------------------------------------*/
 
-// @desc Create new user
-// @route POST api/user
-// @access PUBLIC
-
-const createNewUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-
-  // Confirm data
-  if (!email || !password) return res.status(400).json({ message: 'All fields are required!' });
-
-  // Check for duplicate
-  const duplicate = await User.findOne({ email }).lean().exec();
-
-  if (duplicate) return res.status(409).json({ messsage: 'User with this email exists' });
-
-  // hash password
-  const hashedPwd = await bcrypt.hash(password, 10); // salt rounds
-
-  // get username  ? Maybe in schema model create ?
-
-  const name = email.split('@')[0];
-
-  const userObject = { email, password: hashedPwd, name };
-
-  // Create and store new user
-
-  const user = await User.create(userObject);
-
-  if (!user) return res.status(400).json({ message: 'Invalid user data received' });
-
-  return res.status(201).json({ message: `New user ${name} created` });
-});
-
-/*--------------------------------------------------------------*/
-
 // @desc Update a user
 // @route PATCH api/user
 // @access PRIVATE
@@ -106,7 +71,6 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 module.exports = {
   getUser,
-  createNewUser,
   updateUser,
   deleteUser,
 };

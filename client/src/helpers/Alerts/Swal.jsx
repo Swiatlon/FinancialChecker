@@ -4,7 +4,7 @@ import ChoosingColorBox, { PickedColorInformationBox } from '@/components/molecu
 
 const MySwal = withReactContent(Swal);
 
-export const alertForErrors = (errorMessage) => {
+export function alertForErrors(errorMessage) {
   MySwal.fire({
     icon: 'error',
     title: 'Oops...',
@@ -12,13 +12,12 @@ export const alertForErrors = (errorMessage) => {
     showConfirmButton: false,
     timer: 2000,
   });
-};
+}
 
 const alertForChoosingAppColor = (updateColor) => {
   const colors = ['#046ee899', '#f59e0b', '#4338ca', '#D50000'];
   const defaultColor = localStorage.designColor ? localStorage.designColor : '#FFB60D';
   let choosedColor = defaultColor;
-  const timerSeconds = 2000;
 
   MySwal.fire({
     title: <p>Choose the APP color!</p>,
@@ -113,14 +112,14 @@ export const alertForSessionExpired = () => {
   });
 };
 
-export const alertForSucessfullLogin = (navigateToOverview) => {
+export const alertForSuccessfulAuth = (message, navigate) => {
   MySwal.fire({
     icon: 'success',
     title: 'Succeed!',
-    text: 'Succesfully logged in!',
+    text: `${message}`,
     showConfirmButton: false,
-    timer: 2000,
-  }).then(() => navigateToOverview());
+    timer: 3000,
+  }).then(() => navigate());
 };
 
 export default alertForChoosingAppColor;

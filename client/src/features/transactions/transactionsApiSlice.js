@@ -1,9 +1,4 @@
-import { createSelector, createEntityAdapter } from '@reduxjs/toolkit';
 import apiSlice from '../api/apiSlice';
-
-const transactionsAdapter = createEntityAdapter({});
-
-const initialState = transactionsAdapter.getInitialState();
 
 export const transactionsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -36,6 +31,8 @@ export const transactionsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const { useGetTransactionsQuery, useAddNewTransactionMutation } = transactionsApiSlice;
+
+// SHOULD BE WORKING ON STATE INSTEAD ARRAY ?
 
 export function getMonthlyTransactions(array) {
   const now = new Date();
@@ -71,7 +68,7 @@ export function getWeeklyExpenses(array) {
 
   const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - daysSinceMonday); // Monday
   const endOfWeek = new Date(now.getFullYear(), now.getMonth(), startOfWeek.getDate() + 6); // Sunday
-  
+
   const days = ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
 
   const dailyExpenses = {};

@@ -21,10 +21,22 @@ const authApiSlice = apiSlice.injectEndpoints({
           await queryFulfilled;
           dispatch(logOut());
           dispatch(apiSlice.util.resetApiState()); // clear main data + cache in main API Data Storage
+          return true;
         } catch (err) {
           return err;
         }
       },
+    }),
+
+    createNewUser: builder.mutation({
+      query: (initialUserData) => ({
+        url: 'auth/register',
+        method: 'POST',
+        body: {
+          ...initialUserData,
+        },
+        invalidatesTags: (result, error, arg) => [{ type: 'User', id: 'user' }],
+      }),
     }),
 
     refresh: builder.mutation({
@@ -37,10 +49,13 @@ const authApiSlice = apiSlice.injectEndpoints({
           const { data } = await queryFulfilled;
           const { accessToken } = data;
           dispatch(setCredentials({ accessToken }));
-        } catch (err) {}
+          return true;
+        } catch (err) {
+          return err;
+        }
       },
     }),
   }),
 });
 
-export const { useLoginMutation, useSendLogoutMutation, useRefreshMutation } = authApiSlice;
+export const { useLoginMutation, useSendLogoutMutation, useRefreshMutation, useCreateNewUserMutation } = authApiSlice;

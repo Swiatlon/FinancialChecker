@@ -1,11 +1,9 @@
-import { createSelector } from '@reduxjs/toolkit';
 import apiSlice from '../api/apiSlice';
-
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUser: builder.query({
-      query: (userID) => `api/user?id=${userID}`, 
+      query: (userID) => `api/user?id=${userID}`,
       method: 'GET',
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
@@ -16,17 +14,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
         loadedUser.id = loadedUser._id;
         return loadedUser;
       },
-    }),
-
-    addNewUser: builder.mutation({
-      query: (initialUserData) => ({
-        url: 'api/user',
-        method: 'POST',
-        body: {
-          ...initialUserData,
-        },
-        invalidatesTags: (result, error, arg) => [{ type: 'User', id: 'user' }],
-      }),
     }),
 
     deleteUser: builder.mutation({
@@ -51,4 +38,4 @@ export const userApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetUserQuery, useAddNewUserMutation, useDeleteUserMutation, useUpdateUserMutation } = userApiSlice;
+export const { useGetUserQuery, useDeleteUserMutation, useUpdateUserMutation } = userApiSlice;

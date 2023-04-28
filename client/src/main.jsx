@@ -16,6 +16,7 @@ import store from './app/store';
 import PersistLogin from './components/organisms/PersistLogin/PersistLogin';
 import Prefetch from './components/organisms/Prefetch/Prefetch';
 import PostAuthHome from './views/PostAuthHome/PostAuthHome';
+import MyWallet from './views/MyWallet/MyWallet';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,8 @@ const router = createBrowserRouter([
                 element: <PostAuthLayout />,
                 children: [
                   { path: '', element: <PostAuthHome /> },
+                  { path: '*', element: <PostAuthHome /> },
+                  { path: 'myWallet', element: <MyWallet /> },
                   { path: 'overview', element: <Overview /> },
                   { path: 'addNewExpenses', element: <NewExpenses /> },
                 ],

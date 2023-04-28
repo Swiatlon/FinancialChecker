@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { useNavigate } from 'react-router-dom';
-import { setCredentials, logOut } from '../auth/authSlice';
+import { setCredentials } from '../auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:3500',
+  baseUrl: 'https://FinancialChecker-api.onrender.com',
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const { token } = getState().auth;

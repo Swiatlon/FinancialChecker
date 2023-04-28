@@ -40,6 +40,7 @@ const login = asyncHandler(async (req, res) => {
     process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: '7d' },
   );
+
   const cookieTime = 7 * 24 * 60 * 60 * 1000; // 7 days
   // Create secure cookie with refresh token
   res.cookie('jwt', refreshToken, {
@@ -52,6 +53,42 @@ const login = asyncHandler(async (req, res) => {
   // Send accessToken containingemail
   return res.json({ accessToken });
 });
+/*--------------------------------------------------------------*/
+
+// @desc Create new user
+// @route POST auth/register
+// @access Public
+
+const createNewUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  // Confirm data
+  if (!email || !password) return res.status(400).json({ message: 'All fields are required!' });
+
+  // Check for duplicate
+
+  const duplicate = await User.findOne({ email }).lean().exec();
+
+  if (duplicate) return res.status(409).json({ message: 'User with this email exists' });
+
+  // hash password
+  const hashedPwd = await bcrypt.hash(password, 10); // salt rounds
+
+  // get username  ? Maybe in schema model create ?
+
+  const name = email.split('@')[0];
+
+  const userObject = { email, password: hashedPwd, name };
+
+  // Create and store new user
+
+  const user = await User.create(userObject);
+
+  if (!user) return res.status(400).json({ message: 'Invalid user data received' });
+
+  return res.status(201).json({ message: `New user ${name} created` });
+});
+/*--------------------------------------------------------------*/
 
 // @desc Refresh
 // @route POST /auth/refresh
@@ -89,6 +126,7 @@ const refresh = (req, res) => {
     }),
   );
 };
+/*--------------------------------------------------------------*/
 
 // @desc Logout
 // @route POST /auth/logout
@@ -108,4 +146,5 @@ module.exports = {
   login,
   refresh,
   logout,
+  createNewUser,
 };

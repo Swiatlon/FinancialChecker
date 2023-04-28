@@ -12,7 +12,7 @@ import AuthSubmitButton from '@/components/atoms/AuthButton/AuthButton.style';
 import mailIcon from '@/assets/images/icons/mail.svg';
 import passwordIcon from '@/assets/images/icons/lock.svg';
 import AuthRememberBox from '@/components/molecules/AuthRememberBox/AuthRememberBox.style';
-import { alertForErrors, alertForSuccessfulAction, alertForSucessfullLogin } from '@/helpers/Alerts/Swal';
+import { alertForErrors, alertForSuccessfulAuth } from '@/helpers/Alerts/Swal';
 
 function Login() {
   // React
@@ -38,7 +38,9 @@ function Login() {
       const { email, password } = data;
       const { accessToken } = await login({ email, password }).unwrap();
       dispatch(setCredentials({ accessToken }));
-      alertForSucessfullLogin(navigate('/postAuth'));
+      alertForSuccessfulAuth('Logged in!', () => {
+        navigate('/postAuth');
+      });
     } catch (err) {
       alertForErrors(err.data.message);
     }

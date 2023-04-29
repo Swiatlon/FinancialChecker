@@ -7,7 +7,7 @@ function Loader() {
   const theme = useTheme();
   return (
     <LoaderContainer>
-      <ClipLoader color={`${theme.colors.neonColor}`} />
+      <ClipLoader color={`${theme?.colors?.neonColor || '#046ee899'}`} />
     </LoaderContainer>
   );
 }

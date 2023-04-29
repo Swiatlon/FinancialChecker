@@ -1,3 +1,3 @@
-const allowedOrigins = ['http://localhost:5173']; // later website link
+const allowedOrigins = ['https://financial-checker.onrender.com'];
 
 module.exports = allowedOrigins;

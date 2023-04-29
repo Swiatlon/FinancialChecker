@@ -19,6 +19,8 @@ app.use(express.json());
 
 app.use(cookieParser());
 
+app.use('/wakeUp', require('./routes/wakingUpServerRoute'));
+
 app.use('/api', require('./routes/userRoutes'));
 
 app.use('/api', require('./routes/transactionsRoutes'));

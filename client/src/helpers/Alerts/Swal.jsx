@@ -1,8 +1,40 @@
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import ChoosingColorBox, { PickedColorInformationBox } from '@/components/molecules/ChoosingColor/ChoosingColor.style';
+import patrickGif from '@/assets/gifs/sleeping-patrick.gif';
+import wakeUpGif from '@/assets/gifs/server-ready.gif';
+import { ClipLoader } from 'react-spinners';
 
 const MySwal = withReactContent(Swal);
+
+export function alertForSleepingServer(color) {
+  MySwal.fire({
+    title: 'Server is sleeping...',
+    allowOutsideClick: false,
+    html: (
+      <div style={{ display: 'grid', gap: '25px', paddingBottom: '25px', justifyItems: 'center' }}>
+        <p>We are waking up Patrick, please wait a second(Due to free hosting it could take to 30 seconds).</p>
+        <img
+          style={{ width: '100%', height: '100%', overflow: 'hidden' }}
+          src={patrickGif}
+          alt="sleeping patrick cartoon character"
+        />
+        <ClipLoader color={color} />
+      </div>
+    ),
+    showConfirmButton: false,
+  });
+}
+
+export function alertForServerAwake() {
+  MySwal.fire({
+    title: 'Server is working!',
+    allowOutsideClick: true,
+    showConfirmButton: true,
+    timer: 3000,
+    html: <img src={wakeUpGif} alt="two characters waving" />,
+  });
+}
 
 export function alertForErrors(errorMessage) {
   MySwal.fire({

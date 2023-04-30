@@ -1,3 +1,4 @@
+import { createSelector } from '@reduxjs/toolkit';
 import apiSlice from '../api/apiSlice';
 
 export const transactionsApiSlice = apiSlice.injectEndpoints({
@@ -31,6 +32,15 @@ export const transactionsApiSlice = apiSlice.injectEndpoints({
 });
 
 export const { useGetTransactionsQuery, useAddNewTransactionMutation } = transactionsApiSlice;
+
+export const selectTransactionsResult = (userID) => transactionsApiSlice.endpoints.getTransactions.select(userID);
+
+export const selectExpenses = (userID) =>
+  createSelector(selectTransactionsResult(userID), (transactions) => transactions?.data?.expenses.length);
+
+// export const selectTotalAmountOfTransactions = createSelector(selectTransactions, (transactions) =>
+//   transactions.reduce((total, transaction) => total + transaction.amount, 0),
+// );
 
 // SHOULD BE WORKING ON STATE INSTEAD ARRAY ?
 

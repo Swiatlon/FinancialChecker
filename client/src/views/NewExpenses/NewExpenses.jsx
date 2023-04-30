@@ -1,12 +1,14 @@
 import React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 import { NewExpensesContainer, ExpensesForm, TwoItemsPerRow, ExpensesItem } from './NewExpenses.style';
-import { useAddNewTransactionMutation } from '@/features/transactions/transactionsApiSlice';
+import { useAddNewTransactionMutation, selectExpenses } from '@/features/transactions/transactionsApiSlice';
+import { useGetUserQuery } from '@/features/user/userApiSlice';
 import { alertForErrors, alertForSuccessfulAction, alertForMoneyIncorrecntess } from '@/helpers/Alerts/Swal';
 import useAuth from '@/hooks/useAuth';
 
 function NewExpenses() {
-  const { id: userID } = useAuth();
+  const { id: userID, email } = useAuth();
 
   // Validation
   const regexpForNoNumbers = /^[A-Za-z-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/i;
@@ -18,7 +20,10 @@ function NewExpenses() {
   const patternMessage = 'You need to meet the pattern validation!';
 
   // Redux
-  const [addNewTransaction, { isLoading, isError, data, error }] = useAddNewTransactionMutation();
+  const [addNewTransaction, {}] = useAddNewTransactionMutation();
+  const { data: userData, isLoading, isSuccess, isError, error } = useGetUserQuery(userID);
+
+  const transactionCount = useSelector(selectExpenses(userID));
 
   // React Forms
   const {
@@ -50,8 +55,18 @@ function NewExpenses() {
   const onSubmit = async (data) => {
     let userConfirm = true;
     let { amount } = data;
+    const { name } = userData;
     const { location, title, items } = data;
 
+    // Guest User
+
+    if (name.toLowerCase() === 'guest') {
+      if (transactionCount > 15) return alertForErrors('Maximum amount of transactions on guest account reached!');
+
+      if (amount > 3000) return alertForErrors('Guest user can only send amount lower than 3000');
+    }
+
+    // Normal User
     const totalMoneyAmountOfItems = Object.values(items.length > 0 ? items : 0)
       .map((item) => item.value)
       .reduce((a, b) => a + b, 0);
@@ -66,12 +81,12 @@ function NewExpenses() {
 
     await addNewTransaction({ userID, type: 'expense', amount, title, location, items })
       .unwrap()
-      .then(() => {
+      .then((result) => {
         reset(); // This will reset all form values
         remove(); // Reset all items
         if (isError) return alertForErrors("Your data hasn't been sent");
 
-        return alertForSuccessfulAction('Data sent successfuly!');
+        return alertForSuccessfulAction(`${result.message}`);
       });
   };
 

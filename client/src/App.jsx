@@ -23,7 +23,7 @@ function App() {
       const timer = setTimeout(() => {
         alertInstance(theme.colors.neonColor);
         wasSleeping = true;
-      }, 4000);
+      }, 3000);
 
       wakeUp()
         .unwrap()

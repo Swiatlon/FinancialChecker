@@ -17,14 +17,13 @@ import useAuth from '@/hooks/useAuth';
 import Loader from '@/helpers/Loader/Loader';
 
 function PostAuthLayout() {
+  const updateAppColor = useContext(ThemeUpdateContext);
   const { id: userID } = useAuth();
   const { data, isLoading, isSuccess, isError, error } = useGetUserQuery(userID);
 
   if (isLoading) return <Loader color="#36d7b7" />;
 
   const user = data;
-
-  const updateAppColor = useContext(ThemeUpdateContext);
   // top component
   return (
     <PostAuthContainer>
@@ -38,7 +37,7 @@ function PostAuthLayout() {
           src={ConfigSVG}
           alt="user avatar"
           onClick={() => {
-            alertForChoosingAppColor(updateAppColor);
+            // alertForChoosingAppColor(updateAppColor);
           }}
         />
       </TopInformationBox>

@@ -82,7 +82,7 @@ function ThisMonthExpenses({ expenses }) {
 
   return (
     <SideDiv>
-      <h3>This Motnh:</h3>
+      <h3>This Month:</h3>
       <ChartBox height="250px">
         <Line data={monthlyChart} options={chartOptions} />
       </ChartBox>

@@ -99,3 +99,15 @@ export const LogoutButton = styled.img`
   width: 30px;
   cursor: pointer;
 `;
+
+export const Hamburger = styled.img`
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  z-index: 99;
+`;
+
+export const Logo = styled.img`
+  width: 35px;
+  height: 40px;
+`;

@@ -3,10 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useSendLogoutMutation } from '@/features/auth/authApiSlice';
 import { selectCurrentToken } from '@/features/auth/authSlice';
-import { NavBar, Menu, MenuItem, LogoHamburgerContainer, LogoContentBox, LogoutButton } from './Navigation.style';
+import {
+  NavBar,
+  Menu,
+  MenuItem,
+  LogoHamburgerContainer,
+  LogoContentBox,
+  LogoutButton,
+  Hamburger,
+  Logo,
+} from './Navigation.style';
 import LogoImage from '@/assets/images/logo.jpg';
-import Logo from '@/components/atoms/Logo.style';
-import Hamburger from '@/components/atoms/Hamburger.style';
 import HamburgerSrc from '@/assets/images/icons/hamburger.svg';
 import cardIcon from '@/assets/images/icons/credit-card.svg';
 import homeIcon from '@/assets/images/icons/home.svg';

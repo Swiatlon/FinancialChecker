@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import ChoosingColorBox, { PickedColorInformationBox } from '@/components/molecules/ChoosingColor/ChoosingColor.style';
+import ChoosingColorBox, { PickedColorInformationBox } from '@/components/ChoosingColor/ChoosingColor.style';
 import patrickGif from '@/assets/gifs/sleeping-patrick.gif';
 import wakeUpGif from '@/assets/gifs/server-ready.gif';
 import { ClipLoader } from 'react-spinners';

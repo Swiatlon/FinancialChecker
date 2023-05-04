@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { setCredentials } from '@/features/auth/authSlice';
 import { useLoginMutation } from '@/features/auth/authApiSlice';
 import usePersist from '@/hooks/usePersist';
-import AuthForm from '@/components/organisms/AuthForm/AuthForm.style';
-import AuthTitle from '@/components/atoms/AuthTitle/AuthTitle.style';
-import AuthTextField from '@/components/molecules/AuthTextField/AuthTextField.style';
-import AuthSubmitButton from '@/components/atoms/AuthButton/AuthButton.style';
+import AuthForm from '@/components/Auth/AuthForm/AuthForm.style';
+import AuthTitle from '@/components/Auth/AuthTitle/AuthTitle.style';
+import AuthTextField from '@/components/Auth/AuthTextField/AuthTextField.style';
+import AuthSubmitButton from '@/components/Auth/AuthButton/AuthButton.style';
 import mailIcon from '@/assets/images/icons/mail.svg';
 import passwordIcon from '@/assets/images/icons/lock.svg';
-import AuthRememberBox from '@/components/molecules/AuthRememberBox/AuthRememberBox.style';
+import AuthRememberBox from '@/components/Auth/AuthRememberBox/AuthRememberBox.style';
 import { alertForErrors, alertForSuccessfulAuth } from '@/helpers/Alerts/Swal';
 
 function Login() {

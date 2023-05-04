@@ -13,8 +13,8 @@ import PreAuthLayout from './layouts/PreAuthLayout/PreAuthLayout';
 import Register from './views/Register/Register';
 import Login from './views/Login/Login';
 import store from './app/store';
-import PersistLogin from './components/organisms/PersistLogin/PersistLogin';
-import Prefetch from './components/organisms/Prefetch/Prefetch';
+import PersistLogin from './components/PersistLogin/PersistLogin';
+import Prefetch from './components/Prefetch/Prefetch';
 import PostAuthHome from './views/PostAuthHome/PostAuthHome';
 import MyWallet from './views/MyWallet/MyWallet';
 

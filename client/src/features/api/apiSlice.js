@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setCredentials } from '../auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://financial-checker-api.onrender.com',
+  baseUrl: import.meta.env.VITE_DEVELOPMENT_BACKEND_ADDRESS,
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const { token } = getState().auth;

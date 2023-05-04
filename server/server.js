@@ -30,7 +30,6 @@ app.use('/auth', require('./routes/authRoutes'));
 app.use(errorHandler);
 
 mongoose.connection.once('open', () => {
-  console.log('Connected to MongoDB');
   app.listen(PORT, () => console.log(`Server started on PORT:${PORT}`));
 });
 

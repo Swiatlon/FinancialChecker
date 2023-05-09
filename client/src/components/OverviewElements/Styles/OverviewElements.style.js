@@ -22,21 +22,21 @@ export const BoxesContainer = styled.div`
     justify-content: center;
     align-items: center;
   }
-  @media (max-width: ${size.tablet}) {
+  @media (max-width: ${size.mobileL}) {
     justify-content: center;
     display: flex;
     flex-wrap: wrap;
   }
 `;
 
-export const SquareBox = styled.div`
-  max-width: 160px;
-  width: 80%;
-  height: 140px;
+export const ExpensesBox = styled.div`
+  max-width: 150px;
+  height: 120px;
   margin: 20px 0px;
   color: red;
   @media (max-width: ${size.laptopL}) {
-    height: 120px;
+    height: 100px;
+    width: 120px;
   }
   @media (max-width: ${size.laptop}) {
     width: 100px;
@@ -44,8 +44,8 @@ export const SquareBox = styled.div`
     margin: 10px 20px;
   }
   @media (max-width: ${size.tablet}) {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     padding: 15px;
   }
 `;
@@ -74,20 +74,35 @@ export const RectangleBox = styled.div`
   }
 `;
 
-export const ChartBox = styled.div`
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
-  margin-top: auto;
-  margin-bottom: auto;
+export const WeeklyChartBox = styled.div`
+  width: 70%;
+  height: 85%;
+  @media (min-width: 1025px) and (max-width: 1600px) {
+    width: 80%;
+  }
+  @media (max-width: 1024px) {
+    width: 50vw;
+    height: 85%;
+  }
+  @media (max-width: 900px) {
+    width: 60vw;
+    height: 85%;
+  }
+`;
+
+export const MonthlyChartBox = styled.div`
+  width: 70%;
+  height: 85%;
+  @media (min-width: 1025px) and (max-width: 1600px) {
+    width: 80% !important;
+  }
+  @media (max-width: 1024px) {
+    width: 50vw;
+  }
+  @media (max-width: 900px) {
+    width: 60vw;
+  }
   @media (max-width: ${size.tablet}) {
-    width: 450px;
-  }
-  @media (max-width: ${size.mobileL}) {
-    width: 300px;
-    height: 150px;
-  }
-  @media (max-width: ${size.mobileM}) {
-    width: 230px;
-    height: 140px;
+    height: ${({ mobileHeight }) => `${mobileHeight}px`};
   }
 `;

@@ -2,18 +2,18 @@ import React from 'react';
 import { Chart as ChartJS } from 'chart.js/auto';
 import { useTheme } from 'styled-components';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { Line } from 'react-chartjs-2';
-import { SideDiv, ChartBox } from '../Styles/OverviewElements.style';
+import { Line, Bar } from 'react-chartjs-2';
+import { SideDiv, MonthlyChartBox } from '../Styles/OverviewElements.style';
+import useGetWidth from '@/hooks/useGetWidth';
+import { formatNumber } from '@/helpers/helpers';
 
 function ThisMonthExpenses({ expenses }) {
-  // React
-  const theme = useTheme();
-
-  // Get Monthly Expenses
+  // Set Data Before Everything
   function getMonthlyTransactions() {
     const now = new Date();
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
     const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    endOfMonth.setHours(23, 59, 59);
 
     const dailyTransaction = {};
 
@@ -37,8 +37,15 @@ function ThisMonthExpenses({ expenses }) {
     return dailyTransaction;
   }
 
-  // Charts
+  // React
   const monthlyExpenses = getMonthlyTransactions();
+  const theme = useTheme();
+  const width = useGetWidth();
+  const isPhoneSize = width < 768; // 768 => tablet size
+  const amountOfItems = Object.keys(monthlyExpenses).length;
+  const elementHeight = amountOfItems < 15 ? 25 : 16;
+
+  // Charts Initialize
   ChartJS.register(ChartDataLabels);
 
   const monthlyChart = {
@@ -47,30 +54,44 @@ function ThisMonthExpenses({ expenses }) {
       {
         data: [...Object.values(monthlyExpenses)],
         borderColor: theme.colors.neonColor,
-        backgroundColor: 'white',
+        backgroundColor: theme.colors.neonColor,
         pointBackgroundColor: 'white',
         pointBorderColor: 'black',
+        fill: false, // Ensure that the area under the line is not filled
       },
     ],
   };
 
   const chartOptions = {
     responsive: true,
-    // indexAxis: 'y',
-    aspectRadio: 10,
+    indexAxis: isPhoneSize ? 'y' : 'x',
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        beginAtZero: true, // Start the y-axis at zero
+      },
+    },
     layout: {
-      padding: 25,
+      padding: {
+        top: 25,
+        bottom: 25,
+        right: 30,
+        left: 25,
+      },
     },
     plugins: {
       legend: {
         display: false,
       },
       datalabels: {
-        display: true,
+        display: 'auto',
+        formatter: (value) => formatNumber(value),
+        textStrokeWidth: 3,
+        textStrokeColor: 'black',
         color: 'silver',
         anchor: 'end',
         offset: 0, // Add margin between label and data point
-        align: 'top', // Align label text to the top
+        align: 'end', // Align label text to the top
         textShadowColor: 'black',
         textShadowBlur: 4,
         textShadowOffsetX: 2,
@@ -82,10 +103,15 @@ function ThisMonthExpenses({ expenses }) {
 
   return (
     <SideDiv>
-      <h3>This Motnh:</h3>
-      <ChartBox height="250px">
-        <Line data={monthlyChart} options={chartOptions} />
-      </ChartBox>
+      <h3>This Month:</h3>
+      {/* 20 is item space */}
+      <MonthlyChartBox mobileHeight={amountOfItems * elementHeight}>
+        {isPhoneSize ? (
+          <Bar data={monthlyChart} options={chartOptions} />
+        ) : (
+          <Line data={monthlyChart} options={chartOptions} />
+        )}
+      </MonthlyChartBox>
     </SideDiv>
   );
 }

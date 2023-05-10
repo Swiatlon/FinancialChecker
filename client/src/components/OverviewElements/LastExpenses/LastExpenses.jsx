@@ -10,9 +10,18 @@ function LastExpenses({ expenses }) {
     <SideDiv>
       <h3>Last expeneses:</h3>
       <BoxesContainer amountOfBoxes="3">
-        {lastSixExpenses.map((expense, index) => (
-          <ExpensesBox key={index}>- {expense?.amount ?? 'Add data'}</ExpensesBox>
-        ))}
+        {lastSixExpenses.map((expense, index) =>
+          expense.amount ? (
+            <ExpensesBox key={index}>
+              <h5>{expense.title}</h5>
+              <p className="error-color">{expense.amount}</p>
+            </ExpensesBox>
+          ) : (
+            <ExpensesBox key={index}>
+              <p>Add data</p>
+            </ExpensesBox>
+          ),
+        )}
       </BoxesContainer>
     </SideDiv>
   );

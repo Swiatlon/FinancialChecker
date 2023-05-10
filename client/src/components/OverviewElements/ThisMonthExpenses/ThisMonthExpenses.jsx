@@ -86,8 +86,8 @@ function ThisMonthExpenses({ expenses }) {
       datalabels: {
         display: 'auto',
         formatter: (value) => formatNumber(value),
-        textStrokeWidth: 3,
-        textStrokeColor: 'black',
+        textStrokeWidth: 1.5,
+        textStrokeColor: '#272222',
         color: 'silver',
         anchor: 'end',
         offset: 0, // Add margin between label and data point

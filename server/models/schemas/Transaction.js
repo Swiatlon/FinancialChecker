@@ -4,7 +4,13 @@ const transactionSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      default: 'Nameless transaction',
+      set(value) {
+        // our default function
+        if (!value || value.trim() === '') {
+          return 'Nameless Transaction';
+        }
+        return value;
+      },
     },
 
     amount: {

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import size from '@/assets/styles/mediaQueries.style';
 
-export const NewExpensesContainer = styled.div`
+export const NewTransactionContainer = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,16 +12,13 @@ export const NewExpensesContainer = styled.div`
   }
 `;
 
-export const ExpensesForm = styled.form`
+export const TransactionForm = styled.form`
   text-align: center;
   background: #161414;
-  margin-top: 10vh;
   width: 300px;
-  min-height: 500px;
   display: flex;
   flex-direction: column;
   padding: 40px;
-  margin-bottom: 50px;
   gap: 25px;
   border: ${({ theme }) => `1px solid  ${theme.colors.neonColor}`};
   input {

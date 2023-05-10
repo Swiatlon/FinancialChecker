@@ -32,7 +32,7 @@ a{
     display: initial;
 }
 .error-color{
-    color: red;
+    color: #ff4b4b;
 }
 
 input:-webkit-autofill,

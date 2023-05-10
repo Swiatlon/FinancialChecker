@@ -1,7 +1,12 @@
 import React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { NewExpensesContainer, ExpensesForm, TwoItemsPerRow, ExpensesItem } from './NewExpenses.style';
+import {
+  NewTransactionContainer,
+  TransactionForm,
+  TwoItemsPerRow,
+  ExpensesItem,
+} from '@/components/NewTransactionElements/Style/NewTransactionElements.style';
 import { useAddNewTransactionMutation, selectExpenses } from '@/features/transactions/transactionsApiSlice';
 import { useGetUserQuery } from '@/features/user/userApiSlice';
 import { alertForErrors, alertForSuccessfulAction, alertForMoneyIncorrecntess } from '@/helpers/Alerts/Swal';
@@ -91,8 +96,8 @@ function NewExpenses() {
   };
 
   return (
-    <NewExpensesContainer>
-      <ExpensesForm onSubmit={handleSubmit(onSubmit)}>
+    <NewTransactionContainer>
+      <TransactionForm onSubmit={handleSubmit(onSubmit)}>
         <h2>New Expenses</h2>
 
         <input
@@ -175,8 +180,8 @@ function NewExpenses() {
           );
         })}
         <input type="submit" value="Submit" />
-      </ExpensesForm>
-    </NewExpensesContainer>
+      </TransactionForm>
+    </NewTransactionContainer>
   );
 }
 

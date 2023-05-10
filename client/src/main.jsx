@@ -17,6 +17,7 @@ import PersistLogin from './components/PersistLogin/PersistLogin';
 import Prefetch from './components/Prefetch/Prefetch';
 import PostAuthHome from './views/PostAuthHome/PostAuthHome';
 import MyWallet from './views/MyWallet/MyWallet';
+import NewPayment from './views/NewPayment/NewPayment';
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,7 @@ const router = createBrowserRouter([
                   { path: 'myWallet', element: <MyWallet /> },
                   { path: 'overview', element: <Overview /> },
                   { path: 'addNewExpenses', element: <NewExpenses /> },
+                  { path: 'addNewPayment', element: <NewPayment /> },
                 ],
               },
             ],

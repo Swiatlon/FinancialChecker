@@ -33,7 +33,21 @@ export const ExpensesBox = styled.div`
   max-width: 150px;
   height: 120px;
   margin: 20px 0px;
-  color: red;
+  flex-direction: column;
+  gap: 20px;
+  h5 {
+    font-weight: normal;
+    color: silver;
+    display: block;
+    word-break: break-all;
+    text-align: center;
+    width: 100%;
+    overflow-y: auto;
+    max-height: 30%;
+  }
+  h5::-webkit-scrollbar {
+    display: none; /* Chrome and Safari */
+  }
   @media (max-width: ${size.laptopL}) {
     height: 100px;
     width: 120px;

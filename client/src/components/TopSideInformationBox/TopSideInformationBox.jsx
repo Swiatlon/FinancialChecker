@@ -1,14 +1,11 @@
 import React, { useContext } from 'react';
-import { ThemeUpdateContext } from '@/App';
 import useAuth from '@/hooks/useAuth';
 import { useGetUserQuery } from '@/features/user/userApiSlice';
 import Loader from '@/helpers/Loader/Loader';
-import alertForChoosingAppColor from '@/helpers/Alerts/Swal';
-import { TopInformationBox, UserInformationBox, ConfigImg } from './TopSideInformationBox.style';
+import TopInformationBox from './TopSideInformationBox.style';
 import AvatarSVG from '@/assets/images/icons/user.svg';
-import ConfigSVG from '@/assets/images/icons/settings.svg';
 
-function TopSideInformationBox({ updateAppColor }) {
+function TopSideInformationBox() {
   const { id: userID } = useAuth();
   const { data, isLoading, isSuccess, isError, error } = useGetUserQuery(userID);
 
@@ -18,18 +15,8 @@ function TopSideInformationBox({ updateAppColor }) {
 
   return (
     <TopInformationBox>
-      <UserInformationBox>
-        <img src={AvatarSVG} alt="user avatar" />
-        <p>{user?.name ?? 'username'}</p>
-      </UserInformationBox>
-
-      <ConfigImg
-        src={ConfigSVG}
-        alt="user avatar"
-        onClick={() => {
-          alertForChoosingAppColor(updateAppColor);
-        }}
-      />
+      <img src={AvatarSVG} alt="user avatar" />
+      <p>{user?.name ?? 'username'}</p>
     </TopInformationBox>
   );
 }

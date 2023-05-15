@@ -22,6 +22,7 @@ import overviewIcon from '@/assets/images/icons/bar-chart-2.svg';
 import logoutIcon from '@/assets/images/icons/log-out.svg';
 import paymentIcon from '@/assets/images/icons/trending-up.svg';
 import registerIcon from '@/assets/images/icons/user-plus.svg';
+import configIcon from '@/assets/images/icons/settings.svg';
 
 function Navigation() {
   // React Router
@@ -48,6 +49,7 @@ function Navigation() {
     { text: 'My Wallet', icon: cardIcon },
     { text: 'Add new expenses', icon: expensesIcon },
     { text: 'Add new payment', icon: paymentIcon },
+    { text: 'User Panel', icon: configIcon },
   ];
 
   const isAuthorized = currentToken ? true : false;

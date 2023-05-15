@@ -10,6 +10,7 @@ import {
 import { useAddNewTransactionMutation, selectExpenses } from '@/features/transactions/transactionsApiSlice';
 import { useGetUserQuery } from '@/features/user/userApiSlice';
 import { alertForErrors, alertForSuccessfulAction, alertForMoneyIncorrecntess } from '@/helpers/Alerts/Swal';
+import { requiredOptions, onlyNumberOptions } from '@/helpers/Forms/FormHelpers';
 import useAuth from '@/hooks/useAuth';
 
 function NewExpenses() {
@@ -18,9 +19,6 @@ function NewExpenses() {
   // Validation
   const regexpForNoNumbers = /^[A-Za-z-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/i;
   const regexpForMinTwoLetters = /^(?=.*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$/;
-
-  const requiredOptions = { value: true, message: 'Field is required!' };
-  const onlyNumberOptions = { value: true, message: 'Field need to be numer type!' };
 
   const patternMessage = 'You need to meet the pattern validation!';
 
@@ -96,92 +94,90 @@ function NewExpenses() {
   };
 
   return (
-    <NewTransactionContainer>
-      <TransactionForm onSubmit={handleSubmit(onSubmit)}>
-        <h2>New Expenses</h2>
+    <TransactionForm onSubmit={handleSubmit(onSubmit)}>
+      <h2>New Expenses</h2>
 
-        <input
-          {...register('title', {
-            required: requiredOptions,
-            pattern: {
-              value: regexpForNoNumbers,
-              message: patternMessage,
-            },
-            maxLength: 20,
-          })}
-          placeholder="Title"
-        />
-        {errors.title && <p className="error-color">{errors.title.message}</p>}
-
-        <input
-          {...register('amount', {
-            required: requiredOptions,
-            min: 1,
-            valueAsNumber: onlyNumberOptions,
-          })}
-          placeholder="Amount"
-          type="number"
-        />
-        {errors.amount && <p className="error-color">{errors.amount.message}</p>}
-
-        <input
-          {...register('location', {
-            required: false,
-            pattern: {
-              value: regexpForMinTwoLetters,
-              message: patternMessage,
-            },
-            maxLength: 20,
-          })}
-          placeholder="Location"
-        />
-        {errors.location && <p className="error-color">{errors.location.message}</p>}
-
-        <TwoItemsPerRow>
-          <p>Add Item</p>
-          <input value="+" type="button" onClick={addNewItem} />
-        </TwoItemsPerRow>
-
-        {fields.map((field, index) => {
-          return (
-            <>
-              <ExpensesItem key={field.id}>
-                <input
-                  {...register(`items.${index}.name`, {
-                    required: requiredOptions,
-                    pattern: {
-                      value: regexpForNoNumbers,
-                      message: patternMessage,
-                    },
-                    maxLength: 20,
-                  })}
-                  placeholder="Item"
-                />
-
-                <input
-                  {...register(`items.${index}.value`, { required: requiredOptions, valueAsNumber: onlyNumberOptions })}
-                  placeholder="Value"
-                  type="Number"
-                />
-
-                <input
-                  type="button"
-                  value="X"
-                  onClick={() => {
-                    deleteItem(index);
-                  }}
-                />
-              </ExpensesItem>
-
-              {errors.items && errors.items[index] && (
-                <p className="error-color">{errors.items[index].name?.message || errors.items[index].value?.message}</p>
-              )}
-            </>
-          );
+      <input
+        {...register('title', {
+          required: requiredOptions,
+          pattern: {
+            value: regexpForNoNumbers,
+            message: patternMessage,
+          },
+          maxLength: 20,
         })}
-        <input type="submit" value="Submit" />
-      </TransactionForm>
-    </NewTransactionContainer>
+        placeholder="Title"
+      />
+      {errors.title && <p className="error-color">{errors.title.message}</p>}
+
+      <input
+        {...register('amount', {
+          required: requiredOptions,
+          min: 1,
+          valueAsNumber: onlyNumberOptions,
+        })}
+        placeholder="Amount"
+        type="number"
+      />
+      {errors.amount && <p className="error-color">{errors.amount.message}</p>}
+
+      <input
+        {...register('location', {
+          required: false,
+          pattern: {
+            value: regexpForMinTwoLetters,
+            message: patternMessage,
+          },
+          maxLength: 20,
+        })}
+        placeholder="Location"
+      />
+      {errors.location && <p className="error-color">{errors.location.message}</p>}
+
+      <TwoItemsPerRow>
+        <p>Add Item</p>
+        <input value="+" type="button" onClick={addNewItem} />
+      </TwoItemsPerRow>
+
+      {fields.map((field, index) => {
+        return (
+          <>
+            <ExpensesItem key={field.id}>
+              <input
+                {...register(`items.${index}.name`, {
+                  required: requiredOptions,
+                  pattern: {
+                    value: regexpForNoNumbers,
+                    message: patternMessage,
+                  },
+                  maxLength: 20,
+                })}
+                placeholder="Item"
+              />
+
+              <input
+                {...register(`items.${index}.value`, { required: requiredOptions, valueAsNumber: onlyNumberOptions })}
+                placeholder="Value"
+                type="Number"
+              />
+
+              <input
+                type="button"
+                value="X"
+                onClick={() => {
+                  deleteItem(index);
+                }}
+              />
+            </ExpensesItem>
+
+            {errors.items && errors.items[index] && (
+              <p className="error-color">{errors.items[index].name?.message || errors.items[index].value?.message}</p>
+            )}
+          </>
+        );
+      })}
+      <input type="submit" value="Submit" />
+    </TransactionForm>
   );
 }
 

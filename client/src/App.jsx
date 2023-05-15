@@ -43,7 +43,7 @@ function App() {
   const location = useLocation();
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const setAppDesignColor = (newColor) => {
+  const setAppDesignColor = async (newColor) => {
     theme.colors.neonColor = newColor;
     navigate(location.pathname); // we refresh route due to change of styles
   };

@@ -35,7 +35,7 @@ function Home() {
         <Link to="/register">Get Started!</Link>
         <Link to="/tutorial">Tutorial</Link>
         <button type="button" onClick={logInGuest}>
-          Quest Account
+          Guest Account
         </button>
       </ThreeButtonsBox>
     </HomeBox>

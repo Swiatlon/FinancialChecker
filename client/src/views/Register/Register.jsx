@@ -11,6 +11,13 @@ import mailIcon from '@/assets/images/icons/mail.svg';
 import passwordIcon from '@/assets/images/icons/lock.svg';
 import { useLoginMutation, useCreateNewUserMutation } from '@/features/auth/authApiSlice';
 import { alertForSuccessfulAuth, alertForErrors } from '@/helpers/Alerts/Swal';
+import {
+  requiredOptions,
+  maxLength,
+  minLength,
+  emailPatternOptions,
+  passwordPatternOptions,
+} from '@/helpers/Forms/FormHelpers';
 
 function Register() {
   // React Router
@@ -21,10 +28,6 @@ function Register() {
   const [registerUser] = useCreateNewUserMutation();
   const [login] = useLoginMutation();
 
-  // React
-  const passwordPattern = /^^(?=.*[\W_])(?=.*[A-Z]).+$/;
-  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
   // React Forms
   const {
     register,
@@ -32,24 +35,6 @@ function Register() {
     watch,
     formState: { errors },
   } = useForm();
-
-  const errorMessageHandler = (error, type) => {
-    if (!error) return '';
-
-    if (error === 'required') return 'Field is required!';
-
-    if (error === 'pattern') {
-      if (type === 'password') return 'Password pattern:\n -one uppercase letter\n -one special char';
-
-      return "Field don't meet pattern!";
-    }
-
-    if (error === 'minLength') return 'Too few characters!';
-
-    if (error === 'maxLength') return 'Field have too many characters!';
-
-    return "Field don't meet required conditions!";
-  };
 
   const logUserAfterRegister = async (message, email, password) => {
     await login({ email, password })
@@ -80,24 +65,35 @@ function Register() {
       <AuthTextField>
         <img src={mailIcon} alt="email" />
         <input
-          {...register('email', { required: true, maxLength: '30', pattern: emailPattern, minLength: 4 })}
+          {...register('email', {
+            required: requiredOptions,
+            maxLength: maxLength(32),
+            minLength: minLength(3),
+            pattern: emailPatternOptions,
+          })}
           placeholder="email"
-          name="email"
+          type="email"
           aria-invalid={errors.email ? 'true' : 'false'}
         />
       </AuthTextField>
-      {errors.email && <span role="alert">{errorMessageHandler(errors.email.type, 'email')}</span>}
+      {errors.email && <span role="alert">{errors.email.message}</span>}
+
       <AuthTextField>
         <img src={passwordIcon} alt="password" />
         <input
-          {...register('password', { required: true, pattern: passwordPattern, minLength: 6 })}
+          {...register('password', {
+            required: requiredOptions,
+            minLength: minLength(6),
+            maxLength: maxLength(24),
+            pattern: passwordPatternOptions,
+          })}
           placeholder="password"
           type="password"
-          name="password"
           aria-invalid={errors.password ? 'true' : 'false'}
         />
       </AuthTextField>
-      {errors.password && <span role="alert">{errorMessageHandler(errors.password.type, 'password')}</span>}
+      {errors.password && <span role="alert">{errors.password.message}</span>}
+
       <AuthSubmitButton type="submit" value="Register" />
     </AuthForm>
   );

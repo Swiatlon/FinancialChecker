@@ -5,9 +5,10 @@ import {
   NewTransactionContainer,
   TransactionForm,
 } from '@/components/NewTransactionElements/Style/NewTransactionElements.style';
-import { useAddNewTransactionMutation, selectExpenses } from '@/features/transactions/transactionsApiSlice';
+import { useAddNewTransactionMutation, selectPayments } from '@/features/transactions/transactionsApiSlice';
 import { useGetUserQuery } from '@/features/user/userApiSlice';
 import { alertForErrors, alertForSuccessfulAction, alertForMoneyIncorrecntess } from '@/helpers/Alerts/Swal';
+import { requiredOptions, onlyNumberOptions } from '@/helpers/Forms/FormHelpers';
 import useAuth from '@/hooks/useAuth';
 
 function NewPayment() {
@@ -15,18 +16,13 @@ function NewPayment() {
 
   // Validation
   const regexpForNoNumbers = /^[A-Za-z-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/i;
-  const regexpForMinTwoLetters = /^(?=.*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$/;
-
-  const requiredOptions = { value: true, message: 'Field is required!' };
-  const onlyNumberOptions = { value: true, message: 'Field need to be numer type!' };
-
   const patternMessage = 'You need to meet the pattern validation!';
 
   // Redux
   const [addNewTransaction, {}] = useAddNewTransactionMutation();
   const { data: userData, isLoading, isSuccess, isError, error } = useGetUserQuery(userID);
 
-  const transactionCount = useSelector(selectExpenses(userID));
+  const transactionCount = useSelector(selectPayments(userID));
 
   // React Forms
   const {
@@ -64,36 +60,34 @@ function NewPayment() {
   };
 
   return (
-    <NewTransactionContainer>
-      <TransactionForm onSubmit={handleSubmit(onSubmit)}>
-        <h2>New Payment</h2>
+    <TransactionForm onSubmit={handleSubmit(onSubmit)}>
+      <h2>New Payment</h2>
 
-        <input
-          {...register('title', {
-            pattern: {
-              value: regexpForNoNumbers,
-              message: patternMessage,
-            },
-            maxLength: 20,
-          })}
-          placeholder="Title"
-        />
-        {errors.title && <p className="error-color">{errors.title.message}</p>}
+      <input
+        {...register('title', {
+          pattern: {
+            value: regexpForNoNumbers,
+            message: patternMessage,
+          },
+          maxLength: 20,
+        })}
+        placeholder="Title"
+      />
+      {errors.title && <p className="error-color">{errors.title.message}</p>}
 
-        <input
-          {...register('amount', {
-            required: requiredOptions,
-            min: 1,
-            valueAsNumber: onlyNumberOptions,
-          })}
-          placeholder="Amount"
-          type="number"
-        />
-        {errors.amount && <p className="error-color">{errors.amount.message}</p>}
+      <input
+        {...register('amount', {
+          required: requiredOptions,
+          min: 1,
+          valueAsNumber: onlyNumberOptions,
+        })}
+        placeholder="Amount"
+        type="number"
+      />
+      {errors.amount && <p className="error-color">{errors.amount.message}</p>}
 
-        <input type="submit" value="Submit" />
-      </TransactionForm>
-    </NewTransactionContainer>
+      <input type="submit" value="Submit" />
+    </TransactionForm>
   );
 }
 

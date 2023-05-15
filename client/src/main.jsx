@@ -18,6 +18,7 @@ import Prefetch from './components/Prefetch/Prefetch';
 import PostAuthHome from './views/PostAuthHome/PostAuthHome';
 import MyWallet from './views/MyWallet/MyWallet';
 import NewPayment from './views/NewPayment/NewPayment';
+import UserPanel from './views/UserPanel/UserPanel';
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,7 @@ const router = createBrowserRouter([
                   { path: 'overview', element: <Overview /> },
                   { path: 'addNewExpenses', element: <NewExpenses /> },
                   { path: 'addNewPayment', element: <NewPayment /> },
+                  { path: 'userPanel', element: <UserPanel /> },
                 ],
               },
             ],

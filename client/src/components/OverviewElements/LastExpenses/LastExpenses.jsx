@@ -1,5 +1,6 @@
 import React from 'react';
 import { SideDiv, BoxesContainer, ExpensesBox } from '../Styles/OverviewElements.style';
+import { Text } from '@/components/Reusable/Style/ReusableElements';
 
 function LastExpenses({ expenses }) {
   const lastSixExpenses = Array(6).fill(0);
@@ -14,11 +15,11 @@ function LastExpenses({ expenses }) {
           expense.amount ? (
             <ExpensesBox key={index}>
               <h5>{expense.title}</h5>
-              <p className="error-color">{expense.amount}</p>
+              <Text className="error-color">{expense.amount}</Text>
             </ExpensesBox>
           ) : (
             <ExpensesBox key={index}>
-              <p>Add data</p>
+              <Text>Add data</Text>
             </ExpensesBox>
           ),
         )}

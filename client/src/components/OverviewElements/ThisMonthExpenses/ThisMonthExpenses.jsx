@@ -6,6 +6,7 @@ import { Line, Bar } from 'react-chartjs-2';
 import { SideDiv, MonthlyChartBox } from '../Styles/OverviewElements.style';
 import useGetWidth from '@/hooks/useGetWidth';
 import { formatNumber } from '@/helpers/helpers';
+import { SmallTitle } from '@/components/Reusable/Style/ReusableElements';
 
 function ThisMonthExpenses({ expenses }) {
   // Set Data Before Everything
@@ -103,7 +104,7 @@ function ThisMonthExpenses({ expenses }) {
 
   return (
     <SideDiv>
-      <h3>This Month:</h3>
+      <SmallTitle>This Month:</SmallTitle>
       {/* 20 is item space */}
       <MonthlyChartBox mobileHeight={amountOfItems * elementHeight}>
         {isPhoneSize ? (

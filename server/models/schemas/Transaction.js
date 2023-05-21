@@ -25,7 +25,6 @@ const transactionSchema = new mongoose.Schema(
       },
     },
   },
-
   { autoCreate: false, timestamps: true },
 );
 

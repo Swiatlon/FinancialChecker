@@ -10,9 +10,11 @@ const OverviewContainer = styled.div`
   color: white;
   margin-left: 8%;
   padding-right: 20px;
+
   .expenses-red-color {
     color: red;
   }
+  
   @media (max-width: ${size.laptop}) {
     gap: 40px;
     margin-left: 0%;

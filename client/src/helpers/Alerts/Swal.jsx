@@ -1,11 +1,8 @@
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import ChoosingColorBox, {
-  PickedColorInformationBox,
-} from '@/components/UserPanelElements/ChoosingColor/ChoosingColor.style';
+import { ClipLoader } from 'react-spinners';
 import patrickGif from '@/assets/gifs/sleeping-patrick.gif';
 import wakeUpGif from '@/assets/gifs/server-ready.gif';
-import { ClipLoader } from 'react-spinners';
 
 const MySwal = withReactContent(Swal);
 
@@ -49,7 +46,7 @@ export function alertForErrors(errorMessage) {
 }
 
 export const alertForSuccessfulAction = (message) => {
-  MySwal.fire({
+  return MySwal.fire({
     icon: 'success',
     title: 'Succeed!',
     text: `${message !== undefined ? message : 'Your action was succesful!'}`,
@@ -60,7 +57,6 @@ export const alertForSuccessfulAction = (message) => {
 
 export const alertForMoneyIncorrecntess = async () => {
   let result;
-
   await MySwal.fire({
     icon: 'question',
     title: 'Incorrect money amount',
@@ -72,7 +68,6 @@ export const alertForMoneyIncorrecntess = async () => {
   }).then(({ isConfirmed }) => {
     result = isConfirmed;
   });
-
   return result;
 };
 
@@ -98,11 +93,13 @@ export const alertForSuccessfulAuth = (message, navigate) => {
 
 export const alertForConfirmation = (message) => {
   return MySwal.fire({
-    icon: 'info',
+    icon: 'warning',
     title: `Are you sure ?`,
     text: message,
     showConfirmButton: true,
     showCancelButton: true,
+    cancelButtonColor: '#3085d6',
+    confirmButtonColor: '#db1f1f',
   });
 };
 

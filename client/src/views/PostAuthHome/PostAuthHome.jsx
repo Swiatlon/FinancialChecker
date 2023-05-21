@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import HomeBox, { ThreeButtonsBox, PostAuthContainer } from '../Home/Home.style';
+import HomeBox from '../Home/Home.style';
+import ThreeButtonsBox from '@/components/HomeElements/Style/HomeElements.style';
+import { MediumTitle,Text } from '@/components/Reusable/Style/ReusableElements';
 // SAME STYLE AS HOME
 
 function PostAuthHome() {
   return (
     <HomeBox>
-      <h2>Welcome</h2>
-      <p>This website will help you track your expenses!</p>
+      <MediumTitle>Welcome</MediumTitle>
+      <Text>This website will help you track your expenses!</Text>
       <ThreeButtonsBox>
         <Link to="overview">Get Started!</Link>
         <Link to="/tutorial">Tutorial</Link>

@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useUpdateUserMutation } from '@/features/user/userApiSlice';
 import { alertForSuccessfulAction, alertForErrors } from '@/helpers/Alerts/Swal';
 import { requiredOptions, minLength, maxLength, emailPatternOptions } from '@/helpers/Forms/FormHelpers';
+import { Text } from '@/components/Reusable/Style/ReusableElements';
 
 function ChangeEmail({ actualEmail, id }) {
   // React Hook-Form
@@ -15,10 +16,9 @@ function ChangeEmail({ actualEmail, id }) {
   } = useForm({});
 
   // Redux
-  const [updateEmailMutation, {}] = useUpdateUserMutation();
+  const [updateEmailMutation] = useUpdateUserMutation();
 
   // Functions
-
   const updateEmail = async (data) => {
     await updateEmailMutation({ id, email: data.email })
       .unwrap()
@@ -34,7 +34,7 @@ function ChangeEmail({ actualEmail, id }) {
   return (
     <form onSubmit={handleSubmit(updateEmail)}>
       <label htmlFor="email">
-        <p> Email: {actualEmail}</p>
+        <Text> Email: {actualEmail}</Text>
         <input
           {...register('email', {
             required: requiredOptions,
@@ -44,7 +44,7 @@ function ChangeEmail({ actualEmail, id }) {
           })}
           placeholder="new email"
         />
-        {errors.email && <p className="error-color">{errors.email.message}</p>}
+        {errors.email && <Text className="error-color">{errors.email.message}</Text>}
         <button type="submit" aria-label="Save">
           Save
         </button>

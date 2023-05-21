@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
 }
+
 #root{
     width: 100%;
     contain: paint;
@@ -18,21 +19,14 @@ const GlobalStyle = createGlobalStyle`
     background: #171717;
     color:white;
 }
+
 ul{
     list-style-type: none;
 }
+
 a{
     color:white;
     text-decoration: none;
-}
-.hide{
-    display: none;
-}
-.show{
-    display: initial;
-}
-.error-color{
-    color: #ff4b4b;
 }
 
 input:-webkit-autofill,

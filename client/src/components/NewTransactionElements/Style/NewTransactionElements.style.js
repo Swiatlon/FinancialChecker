@@ -1,17 +1,6 @@
 import styled from 'styled-components';
 import size from '@/assets/styles/mediaQueries.style';
 
-export const NewTransactionContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .error-color {
-    text-align: center;
-  }
-`;
-
 export const TransactionForm = styled.form`
   text-align: center;
   background: #161414;
@@ -21,6 +10,7 @@ export const TransactionForm = styled.form`
   padding: 40px;
   gap: 25px;
   border: ${({ theme }) => `1px solid  ${theme.colors.neonColor}`};
+
   input {
     padding: 20px 0px;
     margin-top: 20px;
@@ -30,9 +20,15 @@ export const TransactionForm = styled.form`
     text-align: center;
     color: white;
   }
+
   p {
     text-align: right;
   }
+
+  .error-color {
+    text-align: center;
+  }
+
   input[type='button'] {
     cursor: pointer;
     background: none;
@@ -41,18 +37,21 @@ export const TransactionForm = styled.form`
     text-align: right;
     margin: 0px;
   }
+
   input[type='submit'] {
     background: ${({ theme }) => theme.colors.neonColor};
     cursor: pointer;
   }
+
   @media (max-width: ${size.tablet}) {
-    padding: 20px;
     width: 250px;
   }
+
   @media (max-width: ${size.mobileL}) {
-    padding: 20px;
+    padding: 25px;
     width: 180px;
     font-size: 14px;
+
     input {
       font-size: 12px;
     }
@@ -73,10 +72,12 @@ export const ExpensesItem = styled.div`
   text-align: center;
   align-items: center;
   gap: 10px;
+
   input {
     text-align: center !important;
     margin: 0px;
   }
+
   input[type='button'] {
     color: red;
   }

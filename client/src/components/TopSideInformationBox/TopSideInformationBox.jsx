@@ -3,7 +3,8 @@ import useAuth from '@/hooks/useAuth';
 import { useGetUserQuery } from '@/features/user/userApiSlice';
 import Loader from '@/helpers/Loader/Loader';
 import TopInformationBox from './TopSideInformationBox.style';
-import AvatarSVG from '@/assets/images/icons/user.svg';
+import { ReactComponent as AvatarSVG } from '@/assets/icons/user.svg';
+import { Text } from '../Reusable/Style/ReusableElements';
 
 function TopSideInformationBox() {
   const { id: userID } = useAuth();
@@ -11,14 +12,15 @@ function TopSideInformationBox() {
 
   if (isLoading) return <Loader color="#36d7b7" />;
 
-  const user = data;
-
-  return (
-    <TopInformationBox>
-      <img src={AvatarSVG} alt="user avatar" />
-      <p>{user?.name ?? 'username'}</p>
-    </TopInformationBox>
-  );
+  if (isSuccess) {
+    const user = data;
+    return (
+      <TopInformationBox>
+        <AvatarSVG alt="user avatar" />
+        <Text>{user?.name ?? 'username'}</Text>
+      </TopInformationBox>
+    );
+  }
 }
 
 export default TopSideInformationBox;

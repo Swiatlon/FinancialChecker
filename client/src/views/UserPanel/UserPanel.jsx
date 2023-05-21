@@ -17,7 +17,7 @@ function UserPanel() {
   const { data, isLoading } = useGetUserQuery(userID);
 
   if (isLoading) return <Loader />;
-
+  
   const { email, name } = data;
   // Functions
 

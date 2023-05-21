@@ -1,27 +1,20 @@
 import React from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import {
-  NewTransactionContainer,
-  TransactionForm,
-} from '@/components/NewTransactionElements/Style/NewTransactionElements.style';
+import { TransactionForm } from '@/components/NewTransactionElements/Style/NewTransactionElements.style';
 import { useAddNewTransactionMutation, selectPayments } from '@/features/transactions/transactionsApiSlice';
 import { useGetUserQuery } from '@/features/user/userApiSlice';
 import { alertForErrors, alertForSuccessfulAction, alertForMoneyIncorrecntess } from '@/helpers/Alerts/Swal';
-import { requiredOptions, onlyNumberOptions } from '@/helpers/Forms/FormHelpers';
+import { requiredOptions, onlyNumberOptions, regexpForNoNumbers, maxLength } from '@/helpers/Forms/FormHelpers';
+import { Text, MediumTitle } from '@/components/Reusable/Style/ReusableElements';
 import useAuth from '@/hooks/useAuth';
 
 function NewPayment() {
-  const { id: userID, email } = useAuth();
-
-  // Validation
-  const regexpForNoNumbers = /^[A-Za-z-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/i;
-  const patternMessage = 'You need to meet the pattern validation!';
+  const { id: userID } = useAuth();
 
   // Redux
-  const [addNewTransaction, {}] = useAddNewTransactionMutation();
+  const [addNewTransaction] = useAddNewTransactionMutation();
   const { data: userData, isLoading, isSuccess, isError, error } = useGetUserQuery(userID);
-
   const transactionCount = useSelector(selectPayments(userID));
 
   // React Forms
@@ -34,13 +27,11 @@ function NewPayment() {
   } = useForm({});
 
   // React Forms Functions
-
   const onSubmit = async (data) => {
     const { name } = userData;
     const { title, amount } = data;
 
     // Guest User
-
     if (name.toLowerCase() === 'guest') {
       if (transactionCount > 15) return alertForErrors('Maximum amount of transactions on guest account reached!');
 
@@ -48,7 +39,6 @@ function NewPayment() {
     }
 
     // Normal User
-
     await addNewTransaction({ userID, type: 'payment', amount, title })
       .unwrap()
       .then((result) => {
@@ -61,19 +51,16 @@ function NewPayment() {
 
   return (
     <TransactionForm onSubmit={handleSubmit(onSubmit)}>
-      <h2>New Payment</h2>
+      <MediumTitle>New Payment</MediumTitle>
 
       <input
         {...register('title', {
-          pattern: {
-            value: regexpForNoNumbers,
-            message: patternMessage,
-          },
-          maxLength: 20,
+          pattern: regexpForNoNumbers,
+          maxLength: maxLength(20),
         })}
         placeholder="Title"
       />
-      {errors.title && <p className="error-color">{errors.title.message}</p>}
+      {errors.title && <Text className="error-color">{errors.title.message}</Text>}
 
       <input
         {...register('amount', {
@@ -84,7 +71,7 @@ function NewPayment() {
         placeholder="Amount"
         type="number"
       />
-      {errors.amount && <p className="error-color">{errors.amount.message}</p>}
+      {errors.amount && <Text className="error-color">{errors.amount.message}</Text>}
 
       <input type="submit" value="Submit" />
     </TransactionForm>

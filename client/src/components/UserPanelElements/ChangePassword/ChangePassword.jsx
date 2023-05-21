@@ -15,7 +15,7 @@ function ChangePassword({ id }) {
   } = useForm({});
 
   // Redux
-  const [updatePasswordMutation, {}] = useUpdateUserMutation();
+  const [updatePasswordMutation] = useUpdateUserMutation();
 
   // Functions
   const updatePassword = async (data) => {
@@ -43,7 +43,7 @@ function ChangePassword({ id }) {
           type="password"
           aria-invalid={errors.oldPassword ? 'true' : 'false'}
         />
-        {errors.oldPassword && <p className="error-color">{errors.oldPassword.message}</p>}
+        {errors.oldPassword && <Text className="error-color">{errors.oldPassword.message}</Text>}
         <input
           {...register('newPassword', {
             required: requiredOptions,
@@ -55,7 +55,7 @@ function ChangePassword({ id }) {
           type="password"
           aria-invalid={errors.newPassword ? 'true' : 'false'}
         />
-        {errors.newPassword && <p className="error-color">{errors.newPassword.message}</p>}
+        {errors.newPassword && <Text className="error-color">{errors.newPassword.message}</Text>}
         <button type="submit" aria-label="Save">
           Save
         </button>

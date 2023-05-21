@@ -2,7 +2,6 @@ import React from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import {
-  NewTransactionContainer,
   TransactionForm,
   TwoItemsPerRow,
   ExpensesItem,
@@ -10,22 +9,22 @@ import {
 import { useAddNewTransactionMutation, selectExpenses } from '@/features/transactions/transactionsApiSlice';
 import { useGetUserQuery } from '@/features/user/userApiSlice';
 import { alertForErrors, alertForSuccessfulAction, alertForMoneyIncorrecntess } from '@/helpers/Alerts/Swal';
-import { requiredOptions, onlyNumberOptions } from '@/helpers/Forms/FormHelpers';
+import {
+  requiredOptions,
+  onlyNumberOptions,
+  regexpForNoNumbers,
+  maxLength,
+  minLength,
+} from '@/helpers/Forms/FormHelpers';
+import { MediumTitle, Text } from '@/components/Reusable/Style/ReusableElements';
 import useAuth from '@/hooks/useAuth';
 
 function NewExpenses() {
-  const { id: userID, email } = useAuth();
-
-  // Validation
-  const regexpForNoNumbers = /^[A-Za-z-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/i;
-  const regexpForMinTwoLetters = /^(?=.*[a-zA-Z].*[a-zA-Z])[a-zA-Z0-9]*$/;
-
-  const patternMessage = 'You need to meet the pattern validation!';
+  const { id: userID } = useAuth();
 
   // Redux
-  const [addNewTransaction, {}] = useAddNewTransactionMutation();
+  const [addNewTransaction] = useAddNewTransactionMutation();
   const { data: userData, isLoading, isSuccess, isError, error } = useGetUserQuery(userID);
-
   const transactionCount = useSelector(selectExpenses(userID));
 
   // React Forms
@@ -43,7 +42,6 @@ function NewExpenses() {
   });
 
   // React Forms Functions
-
   const addNewItem = () => {
     append({
       name: '',
@@ -57,12 +55,11 @@ function NewExpenses() {
 
   const onSubmit = async (data) => {
     let userConfirm = true;
-    let { amount } = data;
     const { name } = userData;
+    let { amount } = data;
     const { location, title, items } = data;
 
     // Guest User
-
     if (name.toLowerCase() === 'guest') {
       if (transactionCount > 15) return alertForErrors('Maximum amount of transactions on guest account reached!');
 
@@ -74,6 +71,7 @@ function NewExpenses() {
       .map((item) => item.value)
       .reduce((a, b) => a + b, 0);
 
+    // If user pass items and there is incorrectness in overal amount
     if (totalMoneyAmountOfItems > amount)
       await alertForMoneyIncorrecntess().then((isConfirmed) => {
         userConfirm = isConfirmed;
@@ -95,20 +93,17 @@ function NewExpenses() {
 
   return (
     <TransactionForm onSubmit={handleSubmit(onSubmit)}>
-      <h2>New Expenses</h2>
+      <MediumTitle>New Expenses</MediumTitle>
 
       <input
         {...register('title', {
           required: requiredOptions,
-          pattern: {
-            value: regexpForNoNumbers,
-            message: patternMessage,
-          },
-          maxLength: 20,
+          pattern: regexpForNoNumbers,
+          maxLength: maxLength(20),
         })}
         placeholder="Title"
       />
-      {errors.title && <p className="error-color">{errors.title.message}</p>}
+      {errors.title && <Text className="error-color">{errors.title.message}</Text>}
 
       <input
         {...register('amount', {
@@ -119,23 +114,20 @@ function NewExpenses() {
         placeholder="Amount"
         type="number"
       />
-      {errors.amount && <p className="error-color">{errors.amount.message}</p>}
+      {errors.amount && <Text className="error-color">{errors.amount.message}</Text>}
 
       <input
         {...register('location', {
           required: false,
-          pattern: {
-            value: regexpForMinTwoLetters,
-            message: patternMessage,
-          },
-          maxLength: 20,
+          minLength: minLength(2),
+          maxLength: maxLength(20),
         })}
         placeholder="Location"
       />
-      {errors.location && <p className="error-color">{errors.location.message}</p>}
+      {errors.location && <Text className="error-color">{errors.location.message}</Text>}
 
       <TwoItemsPerRow>
-        <p>Add Item</p>
+        <Text>Add Item</Text>
         <input value="+" type="button" onClick={addNewItem} />
       </TwoItemsPerRow>
 
@@ -146,11 +138,8 @@ function NewExpenses() {
               <input
                 {...register(`items.${index}.name`, {
                   required: requiredOptions,
-                  pattern: {
-                    value: regexpForNoNumbers,
-                    message: patternMessage,
-                  },
-                  maxLength: 20,
+                  pattern: regexpForNoNumbers,
+                  maxLength: maxLength(20),
                 })}
                 placeholder="Item"
               />
@@ -171,7 +160,9 @@ function NewExpenses() {
             </ExpensesItem>
 
             {errors.items && errors.items[index] && (
-              <p className="error-color">{errors.items[index].name?.message || errors.items[index].value?.message}</p>
+              <Text className="error-color">
+                {errors.items[index].name?.message || errors.items[index].value?.message}
+              </Text>
             )}
           </>
         );

@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import ChoosingColorBox from './ChoosingColor.style';
 import { ThemeUpdateContext } from '@/App';
 import { alertForSuccessfulAction } from '@/helpers/Alerts/Swal';
+import { SmallTitle } from '@/components/Reusable/Style/ReusableElements';
 
 function ChoosingColor() {
   const basicColors = ['#046ee899', '#f59e0b', '#4338ca', '#D50000'];
@@ -12,7 +13,7 @@ function ChoosingColor() {
   const setAppDesignColor = useContext(ThemeUpdateContext);
   return (
     <ChoosingColorBox>
-      <h3>Application color:</h3>
+      <SmallTitle>Application color:</SmallTitle>
       {basicColors.map((color) => (
         <button
           key={color}
@@ -27,7 +28,7 @@ function ChoosingColor() {
         </button>
       ))}
 
-      <h3>Color Picker</h3>
+      <SmallTitle>Color Picker</SmallTitle>
 
       <input
         type="color"

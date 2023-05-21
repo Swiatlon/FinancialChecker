@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useUpdateUserMutation } from '@/features/user/userApiSlice';
 import { alertForSuccessfulAction, alertForErrors } from '@/helpers/Alerts/Swal';
 import { requiredOptions, minLength, maxLength } from '@/helpers/Forms/FormHelpers';
+import { Text } from '@/components/Reusable/Style/ReusableElements';
 
 function ChangeUsername({ actualName, id }) {
   // React Hook-Form
@@ -34,7 +35,7 @@ function ChangeUsername({ actualName, id }) {
   return (
     <form onSubmit={handleSubmit(updateUsername)}>
       <label htmlFor="username">
-        <p> Username: {actualName}</p>
+        <Text> Username: {actualName}</Text>
         <input
           {...register('title', {
             required: requiredOptions,
@@ -43,7 +44,7 @@ function ChangeUsername({ actualName, id }) {
           })}
           placeholder="new username"
         />
-        {errors.title && <p className="error-color">{errors.title.message}</p>}
+        {errors.title && <Text className="error-color">{errors.title.message}</Text>}
         <button type="submit" aria-label="Save">
           Save
         </button>

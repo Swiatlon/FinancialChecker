@@ -13,25 +13,24 @@ import {
   Hamburger,
   Logo,
 } from './Navigation.style';
+import { SmallTitle } from '../Reusable/Style/ReusableElements';
 import LogoImage from '@/assets/images/logo.jpg';
-import HamburgerSrc from '@/assets/images/icons/hamburger.svg';
-import cardIcon from '@/assets/images/icons/credit-card.svg';
-import homeIcon from '@/assets/images/icons/home.svg';
-import expensesIcon from '@/assets/images/icons/trending-down.svg';
-import overviewIcon from '@/assets/images/icons/bar-chart-2.svg';
-import logoutIcon from '@/assets/images/icons/log-out.svg';
-import paymentIcon from '@/assets/images/icons/trending-up.svg';
-import registerIcon from '@/assets/images/icons/user-plus.svg';
-import configIcon from '@/assets/images/icons/settings.svg';
+import HamburgerSrc from '@/assets/icons/hamburger.svg';
+import cardIcon from '@/assets/icons/credit-card.svg';
+import homeIcon from '@/assets/icons/home.svg';
+import expensesIcon from '@/assets/icons/trending-down.svg';
+import overviewIcon from '@/assets/icons/bar-chart-2.svg';
+import logoutIcon from '@/assets/icons/log-out.svg';
+import paymentIcon from '@/assets/icons/trending-up.svg';
+import registerIcon from '@/assets/icons/user-plus.svg';
+import configIcon from '@/assets/icons/settings.svg';
 
 function Navigation() {
   // React Router
-
   const navigate = useNavigate();
 
   // Redux
   const currentToken = useSelector(selectCurrentToken);
-
   const [sendLogout] = useSendLogoutMutation();
 
   // React
@@ -43,7 +42,7 @@ function Navigation() {
     { text: 'Login', icon: logoutIcon },
   ];
 
-  const navigationItemsAfterAuth = [
+  const navigationItemsPostAuth = [
     { text: 'Home', icon: homeIcon },
     { text: 'Overview', icon: overviewIcon },
     { text: 'My Wallet', icon: cardIcon },
@@ -71,7 +70,7 @@ function Navigation() {
     if (isAuthorized)
       return (
         <>
-          {navigationItemsAfterAuth.map((item, index) => (
+          {navigationItemsPostAuth.map((item, index) => (
             <MenuItem key={`${item + index}`} to={`postAuth/${item.text.replace(/\s/g, '')}`}>
               <img src={item.icon} alt="menu-icon" />
               {item.text}
@@ -98,7 +97,7 @@ function Navigation() {
         <LogoHamburgerContainer>
           <LogoContentBox className="logoContentBox">
             <Logo src={LogoImage} alt="logo" />
-            <h3>Financial Checker</h3>
+            <SmallTitle>Financial Checker</SmallTitle>
           </LogoContentBox>
           <Hamburger src={HamburgerSrc} alt="menu-logo" onClick={handleClick} />
         </LogoHamburgerContainer>

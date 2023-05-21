@@ -8,10 +8,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
-      keepUnusedDataFor: 5,
       transformResponse: (responseData) => {
         const loadedUser = { ...responseData };
         loadedUser.id = loadedUser._id;
+        delete loadedUser._id;
         return loadedUser;
       },
       providesTags: ['User'],

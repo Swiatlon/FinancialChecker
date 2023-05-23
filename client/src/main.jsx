@@ -19,6 +19,7 @@ import PostAuthHome from './views/PostAuthHome/PostAuthHome';
 import MyWallet from './views/MyWallet/MyWallet';
 import NewPayment from './views/NewPayment/NewPayment';
 import UserPanel from './views/UserPanel/UserPanel';
+import Tutorial from './views/Tutorial/Tutorial';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
         children: [
           { path: '', element: <Home /> },
           { path: '*', element: <Home /> },
+          { path: 'tutorial', element: <Tutorial /> },
           { path: 'register', element: <Register /> },
           { path: 'login', element: <Login /> },
         ],
@@ -50,6 +52,7 @@ const router = createBrowserRouter([
                 children: [
                   { path: '', element: <PostAuthHome /> },
                   { path: '*', element: <PostAuthHome /> },
+                  { path: 'tutorial', element: <Tutorial /> },
                   { path: 'myWallet', element: <MyWallet /> },
                   { path: 'overview', element: <Overview /> },
                   { path: 'addNewExpenses', element: <NewExpenses /> },

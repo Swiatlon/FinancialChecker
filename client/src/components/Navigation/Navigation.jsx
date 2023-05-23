@@ -13,7 +13,7 @@ import {
   Hamburger,
   Logo,
 } from './Navigation.style';
-import { SmallTitle } from '../Reusable/Style/ReusableElements';
+import { SmallTitle } from '../Reusable/Style/ReusableElements.style';
 import LogoImage from '@/assets/images/logo.jpg';
 import HamburgerSrc from '@/assets/icons/hamburger.svg';
 import cardIcon from '@/assets/icons/credit-card.svg';

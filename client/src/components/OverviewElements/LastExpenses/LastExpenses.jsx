@@ -1,5 +1,6 @@
 import React from 'react';
 import { SideDiv, BoxesContainer, ExpensesBox } from '../Styles/OverviewElements.style';
+import { Text } from '@/components/Reusable/Style/ReusableElements.style';
 
 function LastExpenses({ expenses }) {
   const lastSixExpenses = Array(6).fill(0);
@@ -10,9 +11,18 @@ function LastExpenses({ expenses }) {
     <SideDiv>
       <h3>Last expeneses:</h3>
       <BoxesContainer amountOfBoxes="3">
-        {lastSixExpenses.map((expense, index) => (
-          <ExpensesBox key={index}>- {expense?.amount ?? 'Add data'}</ExpensesBox>
-        ))}
+        {lastSixExpenses.map((expense, index) =>
+          expense.amount ? (
+            <ExpensesBox key={index}>
+              <h5>{expense.title}</h5>
+              <Text className="error-color">{expense.amount}</Text>
+            </ExpensesBox>
+          ) : (
+            <ExpensesBox key={index}>
+              <Text>Add data</Text>
+            </ExpensesBox>
+          ),
+        )}
       </BoxesContainer>
     </SideDiv>
   );

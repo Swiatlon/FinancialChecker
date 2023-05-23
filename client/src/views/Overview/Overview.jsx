@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useGetTransactionsQuery } from '@/features/transactions/transactionsApiSlice';
 import Loader from '@/helpers/Loader/Loader';
 import useAuth from '@/hooks/useAuth';
@@ -17,16 +16,17 @@ function Overview() {
 
   if (isLoading) return <Loader />;
 
-  const { expenses = [], payments = [] } = data ?? {};
-
-  return (
-    <OverviewContainer>
-      <MyWalletOverview expenses={expenses} payments={payments} />
-      <ThisWeekExpenses expenses={expenses} />
-      <LastExpenses expenses={expenses} payments={payments} />
-      <ThisMonthExpenses expenses={expenses} />
-    </OverviewContainer>
-  );
+  if (isSuccess) {
+    const { expenses = [], payments = [] } = data ?? {};
+    return (
+      <OverviewContainer>
+        <MyWalletOverview expenses={expenses} payments={payments} />
+        <ThisWeekExpenses expenses={expenses} />
+        <LastExpenses expenses={expenses} payments={payments} />
+        <ThisMonthExpenses expenses={expenses} />
+      </OverviewContainer>
+    );
+  }
 }
 
 export default Overview;

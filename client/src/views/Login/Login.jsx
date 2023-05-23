@@ -5,13 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { setCredentials } from '@/features/auth/authSlice';
 import { useLoginMutation } from '@/features/auth/authApiSlice';
 import usePersist from '@/hooks/usePersist';
-import AuthForm from '@/components/Auth/AuthForm/AuthForm.style';
-import AuthTitle from '@/components/Auth/AuthTitle/AuthTitle.style';
-import AuthTextField from '@/components/Auth/AuthTextField/AuthTextField.style';
-import AuthSubmitButton from '@/components/Auth/AuthButton/AuthButton.style';
-import mailIcon from '@/assets/images/icons/mail.svg';
-import passwordIcon from '@/assets/images/icons/lock.svg';
-import AuthRememberBox from '@/components/Auth/AuthRememberBox/AuthRememberBox.style';
+import {
+  AuthTextField,
+  AuthForm,
+  AuthTitle,
+  AuthSubmitButton,
+  AuthRememberBox,
+} from '@/components/Auth/Style/AuthElements.style';
+import { ReactComponent as MailIcon } from '@/assets/icons/mail.svg';
+import { ReactComponent as PasswordIcon } from '@/assets/icons/lock.svg';
 import { alertForErrors, alertForSuccessfulAuth } from '@/helpers/Alerts/Swal';
 
 function Login() {
@@ -23,7 +25,7 @@ function Login() {
 
   // Redux
   const dispatch = useDispatch();
-  const [login, { isLoading, isError, error }] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   // React Hooks Forms
   const {
@@ -52,16 +54,18 @@ function Login() {
     <AuthForm onSubmit={handleSubmit(onSubmit)}>
       <AuthTitle>Login Form</AuthTitle>
       <AuthTextField>
-        <img src={mailIcon} alt="email" />
+        <MailIcon alt="Mail Icon" />
         <input {...register('email', { required: true })} placeholder="email" />
       </AuthTextField>
       <AuthTextField>
-        <img src={passwordIcon} alt="password" />
+        <PasswordIcon alt="Password Icon" />
         <input {...register('password', { required: true })} placeholder="password" type="password" />
       </AuthTextField>
       <AuthRememberBox>
-        <input type="checkbox" id="myCheckbox" onChange={handleToggle} checked={persist} />
-        <label htmlFor="myCheckbox">Remember Me</label>
+        <label htmlFor="myCheckbox">
+          <input type="checkbox" id="myCheckbox" onChange={handleToggle} checked={persist} />
+          Remember Me
+        </label>
       </AuthRememberBox>
       <AuthSubmitButton type="submit" value="login" />
     </AuthForm>

@@ -14,15 +14,18 @@ export const NavBar = styled.nav`
   top: 0;
   border-right: ${({ theme }) => `1px solid  ${theme.colors.neonColor}`};
   box-shadow: ${({ theme }) => `8px 1px 30px -20px ${theme.colors.neonColor}`};
+
   .logoContentBox {
     // Animation of hiding
     opacity: ${({ navHidden }) => (navHidden ? '0' : '1')};
     width: ${({ navHidden }) => (navHidden ? '0px' : '280px')};
     height: ${({ navHidden }) => (navHidden ? '0px' : '100vh')};
   }
+
   @media (max-width: ${size.tablet}) {
     width: ${({ navHidden }) => (navHidden ? '60px' : '65vw')};
   }
+
   @media (max-width: ${size.mobileL}) {
     width: ${({ navHidden }) => (navHidden ? '60px' : '85vw')};
     padding-right: 10px;
@@ -38,10 +41,12 @@ export const Menu = styled.ul`
   overflow: hidden;
   padding-top: 5vh;
   transition: 1s all;
+
   h3 {
     white-space: nowrap;
     font-size: 20px;
   }
+
   @media (max-width: ${size.mobileL}) {
     h3 {
       font-size: 16px;
@@ -76,12 +81,15 @@ export const MenuItem = styled(NavLink)`
   white-space: nowrap;
   border: 1px solid transparent;
   color: white;
+
   img {
     padding-right: 25px;
   }
+
   &&.active {
     border-left: ${({ theme }) => `2px solid ${theme.colors.neonColor}`};
   }
+  
   &&:hover {
     transition: 0.5s transform;
     transform: scale(1.06);

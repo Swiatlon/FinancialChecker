@@ -50,7 +50,7 @@ const login = asyncHandler(async (req, res) => {
     maxAge: cookieTime, // cookie expiry: set to match refreshToken
   });
 
-  // Send accessToken containingemail
+  // Send accessToken 
   return res.json({ accessToken });
 });
 /*--------------------------------------------------------------*/

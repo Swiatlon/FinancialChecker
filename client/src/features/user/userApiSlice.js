@@ -8,32 +8,33 @@ export const userApiSlice = apiSlice.injectEndpoints({
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
       },
-      keepUnusedDataFor: 5,
       transformResponse: (responseData) => {
         const loadedUser = { ...responseData };
         loadedUser.id = loadedUser._id;
+        delete loadedUser._id;
         return loadedUser;
       },
+      providesTags: ['User'],
     }),
 
     deleteUser: builder.mutation({
-      query: ({ id }) => ({
-        url: '/users',
+      query: ({ id, password }) => ({
+        url: 'api/user',
         method: 'DELETE',
-        body: { id },
+        body: { id, password },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'User', id: arg.id }],
+      invalidatesTags: ['User'],
     }),
 
     updateUser: builder.mutation({
       query: (initialUserData) => ({
-        url: '/users',
+        url: 'api/user',
         method: 'PATCH',
         body: {
           ...initialUserData,
         },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'User', id: arg.id }],
+      invalidatesTags: ['User'],
     }),
   }),
 });

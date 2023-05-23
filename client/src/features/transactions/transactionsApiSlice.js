@@ -38,7 +38,9 @@ export const selectTransactionsResult = (userID) => transactionsApiSlice.endpoin
 export const selectExpenses = (userID) =>
   createSelector(selectTransactionsResult(userID), (transactions) => transactions?.data?.expenses.length);
 
+export const selectPayments = (userID) =>
+  createSelector(selectTransactionsResult(userID), (transactions) => transactions?.data?.payments.length);
+
 // export const selectTotalAmountOfTransactions = createSelector(selectTransactions, (transactions) =>
 //   transactions.reduce((total, transaction) => total + transaction.amount, 0),
 // );
-

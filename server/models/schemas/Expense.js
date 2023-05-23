@@ -5,15 +5,12 @@ const transactionSchema = require('./Transaction');
 const ExpenseSchema = new mongoose.Schema(
   {
     ...transactionSchema.obj,
-
     location: {
       type: String,
       default: 'none',
     },
-
     items: [itemSchema],
   },
-
   { autoCreate: false, timestamps: true },
 );
 

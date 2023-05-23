@@ -12,6 +12,7 @@ function useGetWidth() {
       }, 100);
     }
     window.addEventListener('resize', handleResize);
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 

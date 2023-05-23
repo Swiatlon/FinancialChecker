@@ -1,9 +1,8 @@
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
-import ChoosingColorBox, { PickedColorInformationBox } from '@/components/ChoosingColor/ChoosingColor.style';
+import { ClipLoader } from 'react-spinners';
 import patrickGif from '@/assets/gifs/sleeping-patrick.gif';
 import wakeUpGif from '@/assets/gifs/server-ready.gif';
-import { ClipLoader } from 'react-spinners';
 
 const MySwal = withReactContent(Swal);
 
@@ -46,68 +45,8 @@ export function alertForErrors(errorMessage) {
   });
 }
 
-const alertForChoosingAppColor = (updateColor) => {
-  const colors = ['#046ee899', '#f59e0b', '#4338ca', '#D50000'];
-  const defaultColor = localStorage.designColor ? localStorage.designColor : '#FFB60D';
-  let choosedColor = defaultColor;
-
-  MySwal.fire({
-    title: <p>Choose the APP color!</p>,
-    showConfirmButton: false,
-    html: (
-      <ChoosingColorBox>
-        {colors.map((color) => (
-          <button
-            key={color}
-            style={{ 'background-color': color }}
-            type="button"
-            onClick={() => {
-              choosedColor = color;
-              MySwal.close();
-            }}
-          >
-            {' '}
-          </button>
-        ))}
-
-        <h3>Color Picker</h3>
-
-        <input
-          type="color"
-          value={choosedColor}
-          onChange={(event) => {
-            choosedColor = event.target.value;
-          }}
-          onBlur={() => {
-            MySwal.close();
-          }}
-        />
-      </ChoosingColorBox>
-    ),
-  }).then(() => {
-    if (choosedColor === defaultColor) return alertForErrors('You choosed the same color!');
-
-    MySwal.fire({
-      icon: 'success',
-      title: <h3>Color Changed!</h3>,
-      showConfirmButton: false,
-      timer: 2000,
-      html: (
-        <PickedColorInformationBox>
-          <p>
-            New color is: <span style={{ 'background-color': choosedColor }} />
-          </p>
-        </PickedColorInformationBox>
-      ),
-    }).then(() => {
-      localStorage.setItem('designColor', choosedColor);
-      updateColor(choosedColor);
-    });
-  });
-};
-
 export const alertForSuccessfulAction = (message) => {
-  MySwal.fire({
+  return MySwal.fire({
     icon: 'success',
     title: 'Succeed!',
     text: `${message !== undefined ? message : 'Your action was succesful!'}`,
@@ -118,7 +57,6 @@ export const alertForSuccessfulAction = (message) => {
 
 export const alertForMoneyIncorrecntess = async () => {
   let result;
-
   await MySwal.fire({
     icon: 'question',
     title: 'Incorrect money amount',
@@ -130,7 +68,6 @@ export const alertForMoneyIncorrecntess = async () => {
   }).then(({ isConfirmed }) => {
     result = isConfirmed;
   });
-
   return result;
 };
 
@@ -154,4 +91,27 @@ export const alertForSuccessfulAuth = (message, navigate) => {
   }).then(() => navigate());
 };
 
-export default alertForChoosingAppColor;
+export const alertForConfirmation = (message) => {
+  return MySwal.fire({
+    icon: 'warning',
+    title: `Are you sure ?`,
+    text: message,
+    showConfirmButton: true,
+    showCancelButton: true,
+    cancelButtonColor: '#3085d6',
+    confirmButtonColor: '#db1f1f',
+  });
+};
+
+export const alertForPasswordRequirement = () => {
+  return MySwal.fire({
+    html: <h3>Enter your password</h3>,
+    input: 'password',
+    inputPlaceholder: 'Enter your password',
+    inputAttributes: {
+      maxlength: 32,
+      autocapitalize: 'off',
+      autocorrect: 'off',
+    },
+  });
+};

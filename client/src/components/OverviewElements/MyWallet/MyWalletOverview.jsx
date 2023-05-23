@@ -1,5 +1,6 @@
 import React from 'react';
 import { SideDiv, BoxesContainer, RectangleBox } from '../Styles/OverviewElements.style';
+import { SmallTitle } from '@/components/Reusable/Style/ReusableElements.style';
 
 function MyWalletOverview({ expenses, payments }) {
   function getMoneyBalance() {
@@ -30,7 +31,7 @@ function MyWalletOverview({ expenses, payments }) {
 
   return (
     <SideDiv>
-      <h3>My Wallet:</h3>
+      <SmallTitle>My Wallet:</SmallTitle>
       <BoxesContainer amountOfBoxes="2">
         <RectangleBox moneyBalance={getMoneyBalance()}>
           Amount:<span>&nbsp;{getMoneyBalance()}</span>

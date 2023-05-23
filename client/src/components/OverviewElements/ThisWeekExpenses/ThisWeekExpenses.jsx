@@ -5,6 +5,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Line } from 'react-chartjs-2';
 import { SideDiv, WeeklyChartBox } from '../Styles/OverviewElements.style';
 import { formatNumber } from '@/helpers/helpers';
+import { SmallTitle } from '@/components/Reusable/Style/ReusableElements.style';
 
 function ThisWeekExpenses({ expenses }) {
   // React
@@ -95,7 +96,7 @@ function ThisWeekExpenses({ expenses }) {
 
   return (
     <SideDiv>
-      <h3>This Week:</h3>
+      <SmallTitle>This Week:</SmallTitle>
       <WeeklyChartBox>
         <Line data={weeklyChart} options={chartOptions} />
       </WeeklyChartBox>

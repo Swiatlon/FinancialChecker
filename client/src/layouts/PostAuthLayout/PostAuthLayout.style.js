@@ -7,5 +7,9 @@ export const PostAuthContainer = styled.div`
 `;
 export const ContentContainer = styled.div`
   height: calc(100% - 101px); // 100 +1(border) px is topInformationBox height
+  width: 100%;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

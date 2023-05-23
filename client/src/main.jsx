@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 import GlobalStyle from './assets/styles/GlobalStyle';
 import ErrorPage from './views/ErrorPage/ErrorPage';
 import App from './App';
@@ -20,6 +21,8 @@ import MyWallet from './views/MyWallet/MyWallet';
 import NewPayment from './views/NewPayment/NewPayment';
 import UserPanel from './views/UserPanel/UserPanel';
 import Tutorial from './views/Tutorial/Tutorial';
+// import.meta.env.VITE_QUEST_EMAIL;
+if (import.meta.env.VITE_NODE_ENV === 'production') disableReactDevTools();
 
 const router = createBrowserRouter([
   {

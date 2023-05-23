@@ -9,7 +9,7 @@ const store = configureStore({
     auth: authReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
-  devTools: true, // DEVELOPMENT MODE : TRUE || OTHERWISE : FALSE
+  devTools: false, // DEVELOPMENT MODE : TRUE || OTHERWISE : FALSE
 });
 
 setupListeners(store.dispatch);

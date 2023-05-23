@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import HomeBox from '../Home/Home.style';
 import ThreeButtonsBox from '@/components/HomeElements/Style/HomeElements.style';
-import { MediumTitle,Text } from '@/components/Reusable/Style/ReusableElements';
+import { MediumTitle, Text } from '@/components/Reusable/Style/ReusableElements.style';
 // SAME STYLE AS HOME
 
 function PostAuthHome() {

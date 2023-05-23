@@ -8,14 +8,14 @@ const HomeBox = styled.div`
   display: grid;
   text-align: center;
   margin: 25px;
-  padding: 40px 25px;
+  padding: 40px;
   gap: 25px;
   background: rgba(0, 0, 0, 0.9);
 
   h2 {
     font-size: 22px;
   }
-  
+
   p {
     font-size: 14px;
   }

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useLoginMutation } from '@/features/auth/authApiSlice';
 import { setCredentials } from '@/features/auth/authSlice';
 import { alertForSuccessfulAction, alertForErrors } from '@/helpers/Alerts/Swal';
-import { MediumTitle, Text } from '@/components/Reusable/Style/ReusableElements';
+import { MediumTitle, Text } from '@/components/Reusable/Style/ReusableElements.style';
 import HomeBox from './Home.style';
 import ThreeButtonsBox from '@/components/HomeElements/Style/HomeElements.style';
 

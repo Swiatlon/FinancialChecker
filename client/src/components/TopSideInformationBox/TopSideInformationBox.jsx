@@ -4,7 +4,7 @@ import { useGetUserQuery } from '@/features/user/userApiSlice';
 import Loader from '@/helpers/Loader/Loader';
 import TopInformationBox from './TopSideInformationBox.style';
 import { ReactComponent as AvatarSVG } from '@/assets/icons/user.svg';
-import { Text } from '../Reusable/Style/ReusableElements';
+import { Text } from '../Reusable/Style/ReusableElements.style';
 
 function TopSideInformationBox() {
   const { id: userID } = useAuth();

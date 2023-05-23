@@ -6,7 +6,7 @@ import { Line, Bar } from 'react-chartjs-2';
 import { SideDiv, MonthlyChartBox } from '../Styles/OverviewElements.style';
 import useGetWidth from '@/hooks/useGetWidth';
 import { formatNumber } from '@/helpers/helpers';
-import { SmallTitle } from '@/components/Reusable/Style/ReusableElements';
+import { SmallTitle } from '@/components/Reusable/Style/ReusableElements.style';
 
 function ThisMonthExpenses({ expenses }) {
   // Set Data Before Everything

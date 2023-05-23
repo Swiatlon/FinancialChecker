@@ -1,6 +1,6 @@
 import React from 'react';
 import { SideDiv, BoxesContainer, RectangleBox } from '../Styles/OverviewElements.style';
-import { SmallTitle } from '@/components/Reusable/Style/ReusableElements';
+import { SmallTitle } from '@/components/Reusable/Style/ReusableElements.style';
 
 function MyWalletOverview({ expenses, payments }) {
   function getMoneyBalance() {

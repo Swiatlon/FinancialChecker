@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useUpdateUserMutation } from '@/features/user/userApiSlice';
 import { alertForSuccessfulAction, alertForErrors } from '@/helpers/Alerts/Swal';
 import { requiredOptions, minLength, maxLength, emailPatternOptions } from '@/helpers/Forms/FormHelpers';
-import { Text } from '@/components/Reusable/Style/ReusableElements';
+import { Text } from '@/components/Reusable/Style/ReusableElements.style';
 
 function ChangeEmail({ actualEmail, id }) {
   // React Hook-Form

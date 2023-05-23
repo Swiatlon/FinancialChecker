@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import ChoosingColorBox from './ChoosingColor.style';
 import { ThemeUpdateContext } from '@/App';
 import { alertForSuccessfulAction } from '@/helpers/Alerts/Swal';
-import { SmallTitle } from '@/components/Reusable/Style/ReusableElements';
+import { SmallTitle } from '@/components/Reusable/Style/ReusableElements.style';
 
 function ChoosingColor() {
   const basicColors = ['#046ee899', '#f59e0b', '#4338ca', '#D50000'];

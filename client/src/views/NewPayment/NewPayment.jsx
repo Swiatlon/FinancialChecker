@@ -6,7 +6,7 @@ import { useAddNewTransactionMutation, selectPayments } from '@/features/transac
 import { useGetUserQuery } from '@/features/user/userApiSlice';
 import { alertForErrors, alertForSuccessfulAction, alertForMoneyIncorrecntess } from '@/helpers/Alerts/Swal';
 import { requiredOptions, onlyNumberOptions, regexpForNoNumbers, maxLength } from '@/helpers/Forms/FormHelpers';
-import { Text, MediumTitle } from '@/components/Reusable/Style/ReusableElements';
+import { Text, MediumTitle } from '@/components/Reusable/Style/ReusableElements.style';
 import useAuth from '@/hooks/useAuth';
 
 function NewPayment() {

@@ -16,7 +16,7 @@ import {
   maxLength,
   minLength,
 } from '@/helpers/Forms/FormHelpers';
-import { MediumTitle, Text } from '@/components/Reusable/Style/ReusableElements';
+import { MediumTitle, Text } from '@/components/Reusable/Style/ReusableElements.style';
 import useAuth from '@/hooks/useAuth';
 
 function NewExpenses() {

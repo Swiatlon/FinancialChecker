@@ -1,6 +1,6 @@
 import React from 'react';
 import { SideDiv, BoxesContainer, ExpensesBox } from '../Styles/OverviewElements.style';
-import { Text } from '@/components/Reusable/Style/ReusableElements';
+import { Text } from '@/components/Reusable/Style/ReusableElements.style';
 
 function LastExpenses({ expenses }) {
   const lastSixExpenses = Array(6).fill(0);

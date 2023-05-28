@@ -72,7 +72,7 @@ function NewExpenses() {
       .reduce((a, b) => a + b, 0);
 
     // If user pass items and there is incorrectness in overal amount
-    if (totalMoneyAmountOfItems > amount)
+    if (totalMoneyAmountOfItems > amount || totalMoneyAmountOfItems < amount)
       await alertForMoneyIncorrecntess().then((isConfirmed) => {
         userConfirm = isConfirmed;
         amount = totalMoneyAmountOfItems;

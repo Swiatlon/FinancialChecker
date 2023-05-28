@@ -4,7 +4,7 @@ import { Text } from '@/components/Reusable/Style/ReusableElements.style';
 
 function LastExpenses({ expenses }) {
   const lastSixExpenses = Array(6).fill(0);
-  for (let i = 0; i < 6; i += 1) {
+  for (let i = 0; i < 6 && i < expenses.length; i += 1) {
     lastSixExpenses[i] = expenses[expenses.length - 1 - i];
   }
   return (

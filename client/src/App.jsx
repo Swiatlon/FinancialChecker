@@ -43,6 +43,7 @@ function App() {
 
   const setAppDesignColor = async (newColor) => {
     theme.colors.neonColor = newColor;
+    localStorage.setItem('designColor', newColor);
     navigate(location.pathname); // we refresh route due to change of styles
   };
 

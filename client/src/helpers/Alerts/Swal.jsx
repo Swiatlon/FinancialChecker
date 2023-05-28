@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { DailyTransactionBox, ItemsBox } from '@/components/Scheduler/Style/Scheduler.style';
 import { ClipLoader } from 'react-spinners';
 import patrickGif from '@/assets/gifs/sleeping-patrick.gif';
 import wakeUpGif from '@/assets/gifs/server-ready.gif';
@@ -113,5 +114,26 @@ export const alertForPasswordRequirement = () => {
       autocapitalize: 'off',
       autocorrect: 'off',
     },
+  });
+};
+
+export const alertForShowingDateExpenses = (dailyTransactions) => {
+  return MySwal.fire({
+    html: (
+      <>
+        {dailyTransactions.map((transaction) => (
+          <DailyTransactionBox key={transaction._id}>
+            <h3>{transaction.title}: {transaction.amount}</h3>
+            <ItemsBox>
+              {transaction.items.map((item) => (
+                <p key={item._id}>
+                  {item.name}: {item.value}
+                </p>
+              ))}
+            </ItemsBox>
+          </DailyTransactionBox>
+        ))}
+      </>
+    ),
   });
 };

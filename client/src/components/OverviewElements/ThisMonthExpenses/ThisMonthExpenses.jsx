@@ -7,39 +7,11 @@ import { SideDiv, MonthlyChartBox } from '../Styles/OverviewElements.style';
 import useGetWidth from '@/hooks/useGetWidth';
 import { formatNumber } from '@/helpers/helpers';
 import { SmallTitle } from '@/components/Reusable/Style/ReusableElements.style';
+import { getMonthlyTransactionsValues } from '@/helpers/Transactions/TransactionsHelper';
 
 function ThisMonthExpenses({ expenses }) {
-  // Set Data Before Everything
-  function getMonthlyTransactions() {
-    const now = new Date();
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-    endOfMonth.setHours(23, 59, 59);
-
-    const dailyTransaction = {};
-
-    expenses
-      .filter(
-        (transaction) =>
-          new Date(transaction.createdAt) >= startOfMonth && new Date(transaction.createdAt) <= endOfMonth,
-      )
-      // Summary Daily Transactions
-      .forEach((transaction) => {
-        const date = new Date(transaction.createdAt).toLocaleDateString('en-gb', { day: 'numeric' });
-        const { amount } = transaction;
-
-        if (dailyTransaction[date]) {
-          dailyTransaction[date] += amount;
-        } else {
-          dailyTransaction[date] = amount;
-        }
-      });
-
-    return dailyTransaction;
-  }
-
   // React
-  const monthlyExpenses = getMonthlyTransactions();
+  const monthlyExpenses = getMonthlyTransactionsValues(expenses);
   const theme = useTheme();
   const width = useGetWidth();
   const isPhoneSize = width < 768; // 768 => tablet size
@@ -105,7 +77,6 @@ function ThisMonthExpenses({ expenses }) {
   return (
     <SideDiv>
       <SmallTitle>This Month:</SmallTitle>
-      {/* 20 is item space */}
       <MonthlyChartBox mobileHeight={amountOfItems * elementHeight}>
         {isPhoneSize ? (
           <Bar data={monthlyChart} options={chartOptions} />

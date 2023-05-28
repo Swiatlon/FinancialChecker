@@ -6,52 +6,15 @@ import { Line } from 'react-chartjs-2';
 import { SideDiv, WeeklyChartBox } from '../Styles/OverviewElements.style';
 import { formatNumber } from '@/helpers/helpers';
 import { SmallTitle } from '@/components/Reusable/Style/ReusableElements.style';
+import { getWeeklyTransactionsValues } from '@/helpers/Transactions/TransactionsHelper';
 
 function ThisWeekExpenses({ expenses }) {
   // React
   const theme = useTheme();
 
-  // EXPENSES PREPARE
-  function getWeeklyExpenses() {
-    // Get Curent Date
-    const now = new Date();
-
-    // Parameters for calculations
-    const currentDay = now.getDay();
-    const days = ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
-    const daysSinceMonday = currentDay === 0 ? 6 : currentDay - 1;
-
-    // Week start/end
-    const startOfWeek = new Date(now.getFullYear(), now.getMonth(), now.getDate() - daysSinceMonday); // Monday
-    const endOfWeek = new Date(now.getFullYear(), now.getMonth(), startOfWeek.getDate() + 6);
-    endOfWeek.setHours(23, 59, 59); // Sunday 23:59:59
-
-    // Container for day:value data
-    const dailyExpenses = {};
-
-    expenses
-      .filter(
-        (transaction) =>
-          new Date(transaction.createdAt).getTime() >= startOfWeek.getTime() &&
-          new Date(transaction.createdAt).getTime() <= endOfWeek.getTime(),
-      )
-      .forEach((transaction) => {
-        const date = new Date(transaction.createdAt);
-        const dayOfWeek = date.getDay() === 0 ? days.length - 1 : date.getDay() - 1; // 0 is sunday so we need change it into 6
-        const { amount } = transaction;
-
-        if (dailyExpenses[days[dayOfWeek]]) {
-          dailyExpenses[days[dayOfWeek]] += amount;
-        } else {
-          dailyExpenses[days[dayOfWeek]] = amount;
-        }
-      });
-    return dailyExpenses;
-  }
-
   // CHARTS
   ChartJS.register(ChartDataLabels);
-  const weeklyExpenses = getWeeklyExpenses();
+  const weeklyExpenses = getWeeklyTransactionsValues(expenses);
 
   const weeklyChart = {
     labels: [...Object.keys(weeklyExpenses)],
